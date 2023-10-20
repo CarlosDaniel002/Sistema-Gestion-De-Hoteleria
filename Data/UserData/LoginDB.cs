@@ -9,33 +9,30 @@ namespace Data.UserData
 {
     public class LoginDB
     {
-        public static byte[] GetSaltingForUser(int IdUser)
-        {
-            // Lógica para obtener el salting como un arreglo de bytes
-
-            byte[] salting = new byte[] { 54 }; //  Pendiente modificar toda la lógica del método
-            return salting;
-        }
+        private static string connectionString = "Cadena de conexion";
 
         public static Usuario GetUserByUserName(string nombreUsuario)
         {
-            // Lógica para obtener un usuario por su nombre de usuario desde la base de datos
-            // Esto será reemplazado esto con los datos reales de nuestra base de datos
-
-            // Ejemplo:
-            Usuario usuario = new Usuario
+            using (var connection = new SqlConnection(connectionString))
             {
-                IdUsuario = 1, 
-                NombreCompleto = "Usuario",
-                NombreUsuario = nombreUsuario, 
-                Contraseña = "Password",
-                RolUsuario = "Usuario Regular",
-                Activo = 1
-            };
-
-            return usuario;
+                connection.Open();
+                var query = "SELECT * FROM Usuarios WHERE NombreUsuario = @NombreUsuario";
+                var parameters = new { NombreUsuario = nombreUsuario };
+                return connection.QueryFirstOrDefault<Usuario>(query, parameters);
+            }
         }
 
-
+        public static string GetSaltingForUser(int userId)
+        {
+            using (var connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                var query = "SELECT Salting FROM Usuarios WHERE IdUsuario = @UserId";
+                var parameters = new { UserId = userId };
+                return connection.QueryFirstOrDefault<string>(query, parameters);
+            }
+        }
     }
 }
+
+
