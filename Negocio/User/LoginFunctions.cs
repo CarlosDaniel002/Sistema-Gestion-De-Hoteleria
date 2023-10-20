@@ -22,13 +22,13 @@ namespace Negocio.User
                 return "Usuario no encontrado";
             }
 
-            // Obtener el salting almacenado para el usuario
-            byte[] salting = LoginDB.GetSaltingForUser(usuario.IdUsuario);
+            // Obtener el "salting" almacenado para el usuario como una cadena
+            string salting = LoginDB.GetSaltingForUser(usuario.IdUsuario);
 
             // Verificar si la contraseña proporcionada coincide con la almacenada en la base de datos
             string hashContraseña = GetPassword.GenerateHash(contraseña, salting);
 
-            if (hashContraseña != usuario.Contraseña)
+            if (hashContraseña != usuario.ContraseñaHash)
             {
                 return "Contraseña incorrecta";
             }
