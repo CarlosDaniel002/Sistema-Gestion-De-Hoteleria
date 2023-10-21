@@ -11,18 +11,17 @@ namespace Negocio.User
     public class GetPassword
     {
         // Genera el Hash con el string y el salting
-        public static string GenerateHash(string Password, string Salting)
+        public static string GenerateHash(string Password, byte[] Salting)
         {
-            byte[] combinedBytes, hashBytes, passwordBytes, saltingByte;
+            byte[] combinedBytes, hashBytes, passwordBytes;
             string hashString;
-            saltingByte = StringToByteArray(Salting);
 
             using (SHA512 sha512 = SHA512.Create())
             {
                 passwordBytes = Encoding.UTF8.GetBytes(Password);
                 combinedBytes = new byte[passwordBytes.Length + Salting.Length];
                 Buffer.BlockCopy(passwordBytes, 0, combinedBytes, 0, passwordBytes.Length);
-                Buffer.BlockCopy(saltingByte, 0, combinedBytes, passwordBytes.Length, Salting.Length);
+                Buffer.BlockCopy(Salting, 0, combinedBytes, passwordBytes.Length-1, Salting.Length);
                 hashBytes = sha512.ComputeHash(combinedBytes);
                 // Generación del string.
                 hashString = BitConverter.ToString(hashBytes).Replace("-", "").ToLower();
@@ -31,7 +30,7 @@ namespace Negocio.User
         }
 
         //  Crea un salting ramdon 
-        public static string GenerateSalting()
+        public static byte[] GenerateSalting()
         {
             const int longitudSalt = 32;
             string saltingString;
@@ -42,7 +41,7 @@ namespace Negocio.User
                 rng.GetBytes(salt);
 
                 saltingString = BitConverter.ToString(salt).Replace("-", "").ToLower();
-                return saltingString;
+                return salt;
             }
         }
 

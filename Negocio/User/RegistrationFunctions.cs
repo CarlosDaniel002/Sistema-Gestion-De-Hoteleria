@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Data.Entidades;
+using Data.Models;
 using Data.UserData;
 using System.Globalization;
 
@@ -12,8 +12,9 @@ namespace Negocio.User
 {
     public class RegistrationFunctions
     {
-        public string RegisterUser(Usuario usuario)
+        public static dynamic RegisterUser(Usuario usuario)
         {
+            Guid token = Token.GetRandomTokenAndKeepIt();
             string Respuesta;
             // Logica para registro
             if (usuario.NombreCompleto == null)
@@ -28,14 +29,10 @@ namespace Negocio.User
             {
                 // Se genera el hash
                 byte[] sal = GetPassword.GenerateSalting();
-                usuario.Contraseña = GetPassword.GenerateHash(usuario.Contraseña, sal); 
-                
+                usuario.Contraseña = GetPassword.GenerateHash(usuario.Contraseña, sal);
+                usuario.Salting = BitConverter.ToString(sal).Replace("-", "");
                 // Se guarda la data
-                int IdUser = RegiststionInDB.SetUser(usuario);
-                // Guadar el Salting por el Id
-                RegiststionInDB.SetSaltingForUser(IdUser, sal);
-                // Guardar Token con Id
-                string token = Token.GetRandomTokenAndKeepIt(IdUser);
+                token = RegiststionInDB.SetUser(usuario, token);
                 return token;
             }
         }
