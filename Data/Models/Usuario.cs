@@ -24,8 +24,10 @@ namespace Data.Models
         public int Id { get; set; }
         public string NombreCompleto { get; set; }
         public string NombreUsuario { get; set; }
+        [Required(ErrorMessage = "Contraseña es obligatorio.")]
         public string Contraseña { get; set; }
         public string Salting { get; set; }
+        [Required(ErrorMessage = "El rol es obligatorio.")]
         public string RolUsuario { get; set; }
         public int Activo { get; set; }
 
