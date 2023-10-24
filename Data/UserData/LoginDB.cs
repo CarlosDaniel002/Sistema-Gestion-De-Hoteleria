@@ -1,19 +1,22 @@
-﻿using Data.Entidades;
+﻿using Data.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System;
+using Dapper;
 
 namespace Data.UserData
 {
     public class LoginDB
     {
-        private static string connectionString = "Cadena de conexion";
+        private connectionsDB connectionDB = new connectionsDB();
 
-        public static Usuario GetUserByUserName(string nombreUsuario)
+        public Usuario GetUserByUserName(string nombreUsuario)
         {
-            using (var connection = new SqlConnection(connectionString))
+            using (var connection = new SqlConnection(connectionDB.dataBase.ConnectionString))
             {
                 connection.Open();
                 var query = "SELECT * FROM Usuarios WHERE NombreUsuario = @NombreUsuario";
@@ -22,9 +25,9 @@ namespace Data.UserData
             }
         }
 
-        public static string GetSaltingForUser(int userId)
+        public string GetSaltingForUser(int userId)
         {
-            using (var connection = new SqlConnection(connectionString))
+            using (var connection = new SqlConnection(connectionDB.dataBase.ConnectionString))
             {
                 connection.Open();
                 var query = "SELECT Salting FROM Usuarios WHERE IdUsuario = @UserId";
@@ -34,5 +37,3 @@ namespace Data.UserData
         }
     }
 }
-
-
