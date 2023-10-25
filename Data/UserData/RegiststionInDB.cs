@@ -18,7 +18,7 @@ namespace Data.UserData
         private static SqlDataReader reader;
         private static string Query;
 
-        public static Guid SetUser(Usuario usuario, Guid Token)
+        public static dynamic SetUser(Usuario usuario, Guid Token)
         {
             int? ID = null;
             DateTime fechaHoraActual = DateTime.Now;
@@ -29,17 +29,19 @@ namespace Data.UserData
                 sqlCommand = new SqlCommand(Query, conexion.dataBase);
                 reader = sqlCommand.ExecuteReader();
                 conexion.cerrarConexion();
-                Console.WriteLine("Registro exitoso.");
-            }
-            if (usuario.Id == 0)
-            {
                 ID = GetIdUser();
             }
             if (ID != null)
             {
                 SetTokenForUser(ID, Token);
             }
-            return Token;
+
+            var Respuesta = new
+            {
+                ID = ID,
+                Token = Token
+            };
+            return Respuesta;
         }
 
         public static int? GetIdUser()

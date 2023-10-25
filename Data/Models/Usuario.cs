@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,21 +9,10 @@ namespace Data.Models
 {
     public class Usuario
     {
-        // Datos de usuario
-        /*
-        CREATE TABLE Usuarios(
-    IdUsuario INT PRIMARY KEY IDENTITY,
-    NombreCompleto VARCHAR(150) NOT NULL,
-    NombreUsuario   VARCHAR(15) NOT NULL,
-    Contrase�aHash VARCHAR(15) NOT NULL,
-    Salting         VARCHAR(15),
-        RolUsuario VARCHAR(15) NOT NULL,
-        Activo          TINYINT NOT NULL
-    );
-    GO*/
-
         public int Id { get; set; }
+        [Required(ErrorMessage = "Nombre es obligatorio.")]
         public string NombreCompleto { get; set; }
+        [Required(ErrorMessage = "Usuario es obligatorio.")]
         public string NombreUsuario { get; set; }
         [Required(ErrorMessage = "Contraseña es obligatorio.")]
         public string Contraseña { get; set; }
