@@ -3,27 +3,27 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Data.UserData;
 
 namespace Negocio.User
 {
     public class Token
     {
-        private static dynamic? varToken{ set; get; }
-        public static dynamic GetRandomTokenAndKeepIt(int IdUsuario)
+        public static Guid GetRandomTokenAndKeepIt()
         {
-            varToken = Guid.NewGuid().ToString();
-
-            // Se genera el token y se guarda, falta la logica de guardado con el ID 
-
+            dynamic? varToken = Guid.NewGuid();
+            return varToken;
+        }
+        public static Guid GetRandomTokenAndKeepItDB(int ID)
+        {
+            dynamic?  varToken = Guid.NewGuid();
+            RegiststionInDB.SetTokenForUser(ID,varToken);
             return varToken;
         }
 
-        public static dynamic GetTokenForIdUser(int IdUsuarios)
+        public static dynamic GetTokenForIdUser(int ID)
         {
-            // Logica para obtener el Token del usuario por Id
-            // Modificar logica al tener DB
-            varToken = Guid.NewGuid().ToString();
-            
+            dynamic? varToken = RegiststionInDB.GetTokenAtIdUser(ID);
             return varToken;
         }
     }
