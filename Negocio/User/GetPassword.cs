@@ -23,7 +23,6 @@ namespace Negocio.User
                 Buffer.BlockCopy(passwordBytes, 0, combinedBytes, 0, passwordBytes.Length);
                 Buffer.BlockCopy(Salting, 0, combinedBytes, passwordBytes.Length-1, Salting.Length);
                 hashBytes = sha512.ComputeHash(combinedBytes);
-                // Generación del string.
                 hashString = BitConverter.ToString(hashBytes).Replace("-", "").ToLower();
             }
             return hashString;
@@ -39,7 +38,6 @@ namespace Negocio.User
             {
                 byte[] salt = new byte[longitudSalt];
                 rng.GetBytes(salt);
-
                 saltingString = BitConverter.ToString(salt).Replace("-", "").ToLower();
                 return salt;
             }
@@ -50,7 +48,6 @@ namespace Negocio.User
         {
             int numberChars = dato.Length;
             byte[] bytes = new byte[numberChars / 2];
-
             for (int i = 0; i < numberChars; i += 2)
             {
                 bytes[i / 2] = Convert.ToByte(dato.Substring(i, 2), 16);

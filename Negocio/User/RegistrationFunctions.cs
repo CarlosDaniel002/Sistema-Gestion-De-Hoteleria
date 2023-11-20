@@ -32,8 +32,8 @@ namespace Negocio.User
                 usuario.Contraseña = GetPassword.GenerateHash(usuario.Contraseña, sal);
                 usuario.Salting = BitConverter.ToString(sal).Replace("-", "");
                 // Se guarda la data
-                token = RegiststionInDB.SetUser(usuario, token);
-                return token;
+                var TokenO = RegiststionInDB.SetUser(usuario, token);
+                return TokenO;
             }
         }
     }
