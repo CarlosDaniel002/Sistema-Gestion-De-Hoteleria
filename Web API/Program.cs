@@ -21,6 +21,7 @@ namespace Web_API
                     {
                         policy.AllowAnyOrigin()
                         .AllowAnyMethod()
+                        .AllowAnyHeader()
                         .AllowAnyOrigin();
                     }
                     );
@@ -30,8 +31,9 @@ namespace Web_API
             
             app.UseSwagger();
             app.UseSwaggerUI();
-            app.UseCors();
             app.UseHttpsRedirection();
+
+            app.UseCors();
 
             app.UseAuthorization();
 
