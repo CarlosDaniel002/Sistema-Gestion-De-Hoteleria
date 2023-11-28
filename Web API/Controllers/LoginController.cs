@@ -8,10 +8,10 @@ namespace Web_API.Controllers
     [Route("[controller]")]
     public class LoginController : Controller
     {
-        [HttpGet]
-        public dynamic Get(string nombreUsuario, string contraseña)
+        [HttpPost]
+        public dynamic Get(string nombreUsuario, string clave)
         {
-            var Respuesta = LoginFunctions.LoginUser(nombreUsuario,contraseña);
+            var Respuesta = LoginFunctions.LoginUser(nombreUsuario,clave);
             return Respuesta;
         }
     }

@@ -22,13 +22,13 @@ namespace Negocio.User
                 return "El usuario no existe.";
             }
             
-            string salting = loginDB.GetSaltingForUser(usuario.Id);
+            string salting = loginDB.GetSaltingForUser(usuario.IdUsuario);
 
             string hashContraseña = GetPassword.GenerateHash(contraseña, GetPassword.StringToByteArray(salting));
 
             if (hashContraseña == usuario.Contraseña)
             {
-                Guid token = Token.GetRandomTokenAndKeepItDB(usuario.Id);
+                Guid token = Token.GetRandomTokenAndKeepItDB(usuario.IdUsuario);
                 return token.ToString();
             }
             else

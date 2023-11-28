@@ -9,7 +9,7 @@ namespace Data.Models
 {
     public class Usuario
     {
-        public int Id { get; set; }
+        public int IdUsuario { get; set; }
         [Required(ErrorMessage = "Nombre es obligatorio.")]
         public string NombreCompleto { get; set; }
         [Required(ErrorMessage = "Usuario es obligatorio.")]
