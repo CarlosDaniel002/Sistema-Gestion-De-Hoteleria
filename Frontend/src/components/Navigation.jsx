@@ -20,13 +20,18 @@ export default class Navigation extends Component {
             </Link>
           </li>
           <li>
-            <Link className="menu-link" to="/Home">
-              Home
+            <Link className="menu-link" to="/Category">
+              Categoria
             </Link>
           </li>
           <li>
-            <Link className="menu-link" to="/">
-              Inicio
+            <Link className="menu-link" to="/Room">
+              Habitacion
+            </Link>
+          </li>
+          <li>
+            <Link className="menu-link" to="/Reservation">
+              Reservacion
             </Link>
           </li>
         </ul>

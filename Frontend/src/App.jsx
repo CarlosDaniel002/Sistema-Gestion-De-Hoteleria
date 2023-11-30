@@ -3,15 +3,19 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Navigation from './components/Navigation';
 import Cliente from './components/cliente';
 import Home from './components/home';
+import Category from './components/categoria';
+import Room from './components/habitacion';
+import Reservation from './components/reservacion';
 
 function App() {
   return (
   <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Navigation />} />
-          <Route path="/Home" element={<Home />} />
+          <Route path="/" element={<Home />} />
           <Route path="/Cliente" element={<Cliente />} />
-          {/* Add more routes as needed */}
+          <Route path="/Category" element={<Category />} />
+          <Route path="/Room" element={<Room />} />
+          <Route path="/Reservation" element={<Reservation />} />
         </Routes>
     </BrowserRouter>
   );

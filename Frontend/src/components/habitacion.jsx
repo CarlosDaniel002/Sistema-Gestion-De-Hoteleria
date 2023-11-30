@@ -1,11 +1,11 @@
 import React from "react";
 import Navigation from "../components/Navigation";
-const home = () => {
+const Room = () => {
   return(
   <div>
     <Navigation/>
-    <p>Home</p>
+    <p>habitacion</p>
   </div>);
 }
 
-export default home
+export default Room

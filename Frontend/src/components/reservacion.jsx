@@ -1,11 +1,11 @@
 import React from "react";
 import Navigation from "../components/Navigation";
-const home = () => {
+const Reservation = () => {
   return(
   <div>
     <Navigation/>
-    <p>Home</p>
+    <p>Reservacion</p>
   </div>);
 }
 
-export default home
+export default Reservation
