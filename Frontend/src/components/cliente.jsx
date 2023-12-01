@@ -36,22 +36,19 @@ const Cliente = () => {
   const handleGuardar = async (data) => {
     try {
       if (data.idCliente === 0) {
-        // Si idCliente es 0, es un nuevo cliente, así que hacemos un POST
         await axios.post(API_URL, data, { headers: { 'Content-Type': 'application/json' } });
       } else {
-        // Si idCliente no es 0, es una edición, así que hacemos un PUT
         await axios.put(API_URL, data, { headers: { 'Content-Type': 'application/json' } });
       }
 
       cargarClientes();
-      reset(); // Restablecer los valores del formulario después de enviar
+      reset(); 
     } catch (error) {
       console.error('Error al guardar el cliente:', error);
     }
   };
 
   const handleEditar = (cliente) => {
-    // Cuando se hace clic en el botón de edición, establecemos los valores del cliente en el formulario
     setValue('idCliente', cliente.idCliente);
     setValue('nombre', cliente.nombre);
     setValue('apellido', cliente.apellido);
@@ -61,10 +58,9 @@ const Cliente = () => {
 
   const handleEliminar = async (idCliente) => {
     try {
-      // Hacer una solicitud DELETE al servidor para eliminar el cliente
-      await axios.delete(`${API_URL}/${idCliente}`);
+      await axios.delete(API_URL, {data: {id: idCliente, activar: 0,},});
       cargarClientes();
-      reset(); // Restablecer los valores del formulario después de eliminar
+      reset();
     } catch (error) {
       if (error.response.status === 404) {
         console.error('El cliente con idCliente', idCliente, 'no fue encontrado.');
