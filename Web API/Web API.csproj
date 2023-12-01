@@ -8,10 +8,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+<<<<<<< HEAD
     <_WebToolingArtifacts Remove="Properties\PublishProfiles\Despliegue.pubxml" />
   </ItemGroup>
 
   <ItemGroup>
+=======
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.11" />
+>>>>>>> a5fb8fde5a7897f02d7e223410efe552ac01e997
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.11" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.11" />
