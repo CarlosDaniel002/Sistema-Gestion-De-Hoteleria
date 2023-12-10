@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33502.453
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Negocio", "Negocio\Negocio.csproj", "{B612E3C3-DBF7-47C4-853D-09004B71E8D0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Negocio", "Negocio\Negocio.csproj", "{B612E3C3-DBF7-47C4-853D-09004B71E8D0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "Data\Data.csproj", "{97699385-DBB5-44DE-95DD-150E18063880}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data", "Data\Data.csproj", "{97699385-DBB5-44DE-95DD-150E18063880}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web API", "Web API\Web API.csproj", "{F9C6C016-66BB-4BE6-8A3F-A903DE968611}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Web API", "Web API\Web API.csproj", "{F9C6C016-66BB-4BE6-8A3F-A903DE968611}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests", "Test\Tests.csproj", "{BA254B8C-1DAC-4156-BBAD-2586D600E61A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{F9C6C016-66BB-4BE6-8A3F-A903DE968611}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F9C6C016-66BB-4BE6-8A3F-A903DE968611}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F9C6C016-66BB-4BE6-8A3F-A903DE968611}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA254B8C-1DAC-4156-BBAD-2586D600E61A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA254B8C-1DAC-4156-BBAD-2586D600E61A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA254B8C-1DAC-4156-BBAD-2586D600E61A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA254B8C-1DAC-4156-BBAD-2586D600E61A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
