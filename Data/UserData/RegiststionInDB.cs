@@ -25,7 +25,7 @@ namespace Data.UserData
             if (usuario.IdUsuario == 0)
             {
                 conexion.abrirConexion();
-                Query = $"EXEC InsertUsuario '{usuario.NombreCompleto}', '{usuario.NombreUsuario}', '{usuario.Contraseña}','{usuario.Salting}', '{usuario.RolUsuario}'";
+                Query = $"EXEC InsertUsuario '{usuario.NombreCompleto}', '{usuario.NombreUsuario}', '{usuario.ContrasenaHash}','{usuario.Salting}', '{usuario.RolUsuario}'";
                 sqlCommand = new SqlCommand(Query, conexion.dataBase);
                 reader = sqlCommand.ExecuteReader();
                 conexion.cerrarConexion();
@@ -35,7 +35,6 @@ namespace Data.UserData
             {
                 SetTokenForUser(ID, Token);
             }
-
             var Respuesta = new
             {
                 ID = ID,
@@ -64,6 +63,16 @@ namespace Data.UserData
             var fechaHoraActual = DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss");
             conexion.abrirConexion();
             Query = $"Insert Token values ('{ID}','{Token}','{fechaHoraActual}')";
+            sqlCommand = new SqlCommand(Query, conexion.dataBase);
+            reader = sqlCommand.ExecuteReader();
+            conexion.cerrarConexion();
+        }
+
+        public static void SetUpdateTokenForUser(int? ID, Guid Token)
+        {
+            var fechaHoraActual = DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss");
+            conexion.abrirConexion();
+            Query = $"EXEC ActualizarPorIdToken '{Token}','{ID}';";
             sqlCommand = new SqlCommand(Query, conexion.dataBase);
             reader = sqlCommand.ExecuteReader();
             conexion.cerrarConexion();

@@ -26,9 +26,9 @@ namespace Negocio.User
 
             string hashContraseña = GetPassword.GenerateHash(contraseña, GetPassword.StringToByteArray(salting));
 
-            if (hashContraseña == usuario.Contraseña)
+            if (hashContraseña == usuario.ContrasenaHash)
             {
-                Guid token = Token.GetRandomTokenAndKeepItDB(usuario.IdUsuario);
+                Guid token = Token.GetUpdateTokenDB(usuario.IdUsuario);
                 return token.ToString();
             }
             else
