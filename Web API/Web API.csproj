@@ -8,12 +8,6 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<!-- Mantén este elemento eliminado -->
-		<_WebToolingArtifacts Remove="Properties\PublishProfiles\Despliegue.pubxml" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<!-- Mantén esta sección como está -->
 		<PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.4" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.11" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.11" />
@@ -24,39 +18,11 @@
 		<PackageReference Include="Microsoft.Graph" Version="5.33.0" />
 		<PackageReference Include="Microsoft.VisualStudio.Services.Client" Version="16.205.1" />
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.11" />
 	</ItemGroup>
-
-  <ItemGroup>
-
-    <_WebToolingArtifacts Remove="Properties\PublishProfiles\Despliegue.pubxml" />
-  </ItemGroup>
-
-  <ItemGroup>
-
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.11" />
-
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.11" />
-
-    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.4" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.11" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.11" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.11">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="Microsoft.Graph" Version="5.33.0" />
-    <PackageReference Include="Microsoft.VisualStudio.Services.Client" Version="16.205.1" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
-  </ItemGroup>
-
 
 	<ItemGroup>
 		<ProjectReference Include="..\Negocio\Negocio.csproj" />
-	</ItemGroup>
-
-	<!-- Mantén esta sección como está -->
-	<ItemGroup>
-		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.11" />
 	</ItemGroup>
 
 </Project>
