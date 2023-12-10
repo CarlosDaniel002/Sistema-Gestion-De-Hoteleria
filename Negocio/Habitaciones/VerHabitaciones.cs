@@ -20,9 +20,8 @@ namespace Negocio.Habitaciones
         {
             if (Id != null)
             {
-                Habitacion prueba = null;
                 var habitacion = HabitacionDB.GetHabitacionAtId(Id);
-                if (habitacion == prueba)
+                if (habitacion == null)
                     return Respuesta.getRespuesta("La habitacion no existe", "9970", "El ID que se envia esta nulo o no es valido.");
                 else
                     return habitacion;
