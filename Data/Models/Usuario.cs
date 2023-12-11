@@ -20,6 +20,8 @@ namespace Data.Models
         [Required(ErrorMessage = "El rol es obligatorio.")]
         public string RolUsuario { get; set; }
         public int Activo { get; set; }
+        public int IdUsuario { get; internal set; }
+        public object ContrasenaHash { get; internal set; }
 
         // Metodo para obtener el hash crudo, con el salting, ya que ambos son string en la BD
     }

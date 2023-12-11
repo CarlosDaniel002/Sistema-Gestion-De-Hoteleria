@@ -14,18 +14,18 @@ namespace Data.UserData
     public class RegiststionInDB
     {
         private static connectionsDB conexion = new connectionsDB();
-        private static SqlCommand sqlCommand;
-        private static SqlDataReader reader;
-        private static string Query;
+        private static SqlCommand? sqlCommand;
+        private static SqlDataReader? reader;
+        private static string? Query;
 
         public static dynamic SetUser(Usuario usuario, Guid Token)
         {
             int? ID = null;
             DateTime fechaHoraActual = DateTime.Now;
-            if (usuario.Id == 0)
+            if (usuario.IdUsuario == 0)
             {
                 conexion.abrirConexion();
-                Query = $"EXEC InsertUsuario '{usuario.NombreCompleto}', '{usuario.NombreUsuario}', '{usuario.Contraseña}','{usuario.Salting}', '{usuario.RolUsuario}'";
+                Query = $"EXEC InsertUsuario '{usuario.NombreCompleto}', '{usuario.NombreUsuario}', '{usuario.ContrasenaHash}','{usuario.Salting}', '{usuario.RolUsuario}'";
                 sqlCommand = new SqlCommand(Query, conexion.dataBase);
                 reader = sqlCommand.ExecuteReader();
                 conexion.cerrarConexion();
@@ -35,7 +35,6 @@ namespace Data.UserData
             {
                 SetTokenForUser(ID, Token);
             }
-
             var Respuesta = new
             {
                 ID = ID,
@@ -69,8 +68,18 @@ namespace Data.UserData
             conexion.cerrarConexion();
         }
 
-        public static string GetTokenAtIdUser(int ID) {
-            string Token = null;
+        public static void SetUpdateTokenForUser(int? ID, Guid Token)
+        {
+            var fechaHoraActual = DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss");
+            conexion.abrirConexion();
+            Query = $"EXEC ActualizarPorIdToken '{Token}','{ID}';";
+            sqlCommand = new SqlCommand(Query, conexion.dataBase);
+            reader = sqlCommand.ExecuteReader();
+            conexion.cerrarConexion();
+        }
+
+        public static string? GetTokenAtIdUser(int ID) {
+            string? Token = null;
             conexion.abrirConexion();
             Query = $"Select Token from Token where ID_Usuario = {ID};";
             sqlCommand = new SqlCommand(Query, conexion.dataBase);

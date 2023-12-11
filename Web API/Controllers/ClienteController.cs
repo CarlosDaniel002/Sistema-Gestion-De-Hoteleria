@@ -46,9 +46,9 @@ namespace Web_API.Controllers
         }
 
         [HttpDelete]
-        public Respuesta Delete(int Id, int Accion)
+        public Respuesta Delete(IdClientes Id)
         {
-            Respuesta mensaje = ModificarClientes.EliminarCliente(Id, Accion);
+            Respuesta mensaje = ModificarClientes.EliminarCliente(Id.Id,Id.Activar );
             return mensaje;
         }
     }
