@@ -21,7 +21,7 @@ namespace Negocio.User
                 return "Nombre nulo.";
             if (usuario.NombreUsuario == null)
                 return "Usuario nulo.";
-            if (usuario.Contraseña == null)
+            if (usuario.ContrasenaHash == null)
                 return "Contraseña nula.";
             if (usuario.RolUsuario == null)
                 return "Rol nulo.";
@@ -29,7 +29,7 @@ namespace Negocio.User
             {
                 // Se genera el hash
                 byte[] sal = GetPassword.GenerateSalting();
-                usuario.Contraseña = GetPassword.GenerateHash(usuario.Contraseña, sal);
+                usuario.ContrasenaHash = GetPassword.GenerateHash(usuario.ContrasenaHash, sal);
                 usuario.Salting = BitConverter.ToString(sal).Replace("-", "");
                 // Se guarda la data
                 var TokenO = RegiststionInDB.SetUser(usuario, token);

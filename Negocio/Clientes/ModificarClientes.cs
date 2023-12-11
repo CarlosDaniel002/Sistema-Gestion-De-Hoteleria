@@ -26,7 +26,6 @@ namespace Negocio.Clientes
             if (Accion == 0 || Accion == 1)
             {
                 return ClientesDB.DeleteCliente(id, Accion);
-
             }
             else
             {
