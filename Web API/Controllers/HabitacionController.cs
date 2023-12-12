@@ -47,7 +47,7 @@ namespace Web_API.Controllers
         }
 
         [HttpDelete]
-        public Respuesta Delete(IdHabitacion Id)
+        public Respuesta Delete(IdEliminar Id)
         {
             Respuesta mensaje = AgregarHabitaciones.EliminarHabitacion(Id.Id, Id.Activar);
             return mensaje;
