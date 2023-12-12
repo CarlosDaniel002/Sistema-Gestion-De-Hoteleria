@@ -91,5 +91,41 @@ namespace Data.UserData
             conexion.cerrarConexion();
             return Token;
         }
+
+
+
+
+        public static dynamic ActualizarContrasena(int idUsuario, string nuevaContrasena, string nuevoSalting, Guid nuevoToken)
+        {
+            try
+            {
+                conexion.abrirConexion();
+
+                // Actualizar la contraseña, salting y el token del usuario
+                Query = $"EXEC ActualizarContrasenaSalting '{nuevaContrasena}', '{nuevoSalting}', '{nuevoToken}', {idUsuario};";
+                sqlCommand = new SqlCommand(Query, conexion.dataBase);
+                sqlCommand.ExecuteNonQuery();
+
+                // Actualizar el token en la tabla Token
+                SetUpdateTokenForUser(idUsuario, nuevoToken);
+
+                conexion.cerrarConexion();
+
+                return Respuesta.getRespuesta("Contraseña y salting actualizados con éxito.", "0000", "");
+            }
+            catch (SqlException Error)
+            {
+                return Respuesta.getRespuesta("Fallo al conectarse a la DB.", $"{Error.Number}", $"{Error.Errors}");
+            }
+            catch (Exception Error)
+            {
+                return Respuesta.getRespuesta("Error general.", $"{Error.HResult}", $"{Error.Message} ");
+            }
+        }
+
+
+
+
+
     }
 }

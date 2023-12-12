@@ -25,7 +25,7 @@ namespace Negocio.User
                 return "Contraseña nula.";
             if (usuario.RolUsuario == null)
                 return "Rol nulo.";
-            else 
+            else
             {
                 // Se genera el hash
                 byte[] sal = GetPassword.GenerateSalting();

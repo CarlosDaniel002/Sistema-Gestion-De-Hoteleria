@@ -46,6 +46,12 @@ namespace Negocio.User
         // Convierte String en Byte.
         public static byte[] StringToByteArray(string dato)
         {
+            if (dato.Length % 2 != 0)
+            {
+                // La longitud de la cadena debe ser par
+                dato = "0" + dato;
+            }
+
             int numberChars = dato.Length;
             byte[] bytes = new byte[numberChars / 2];
             for (int i = 0; i < numberChars; i += 2)
@@ -54,5 +60,8 @@ namespace Negocio.User
             }
             return bytes;
         }
+
+
+
     }
 }

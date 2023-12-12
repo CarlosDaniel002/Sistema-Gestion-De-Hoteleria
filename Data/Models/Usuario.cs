@@ -15,13 +15,13 @@ namespace Data.Models
         [Required(ErrorMessage = "Usuario es obligatorio.")]
         public string NombreUsuario { get; set; }
         [Required(ErrorMessage = "Contraseña es obligatorio.")]
-        public string Contraseña { get; set; }
         public string Salting { get; set; }
         [Required(ErrorMessage = "El rol es obligatorio.")]
         public string RolUsuario { get; set; }
         public int Activo { get; set; }
         public int IdUsuario { get; internal set; }
-        public object ContrasenaHash { get; internal set; }
+        public string ContrasenaHash { get; set; }
+       
 
         // Metodo para obtener el hash crudo, con el salting, ya que ambos son string en la BD
     }

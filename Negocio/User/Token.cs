@@ -16,15 +16,8 @@ namespace Negocio.User
         }
         public static Guid GetRandomTokenAndKeepItDB(int ID)
         {
-            dynamic? varToken = Guid.NewGuid();
-            RegiststionInDB.SetTokenForUser(ID, varToken);
-            return varToken;
-        }
-
-        public static Guid GetUpdateTokenDB(int ID)
-        {
-            dynamic? varToken = Guid.NewGuid();
-            RegiststionInDB.SetUpdateTokenForUser(ID, varToken);
+            dynamic?  varToken = Guid.NewGuid();
+            RegiststionInDB.SetTokenForUser(ID,varToken);
             return varToken;
         }
 
@@ -32,6 +25,11 @@ namespace Negocio.User
         {
             dynamic? varToken = RegiststionInDB.GetTokenAtIdUser(ID);
             return varToken;
+        }
+
+        internal static Guid GetUpdateTokenDB(int idUsuario)
+        {
+            throw new NotImplementedException();
         }
     }
 }

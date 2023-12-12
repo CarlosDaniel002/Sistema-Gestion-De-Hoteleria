@@ -13,5 +13,6 @@ namespace Web_API.Controllers
         public dynamic Registrar(Usuario usuario) {
             return RegistrationFunctions.RegisterUser(usuario); 
         }
+
     }
 }

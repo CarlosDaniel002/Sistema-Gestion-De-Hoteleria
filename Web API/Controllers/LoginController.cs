@@ -14,5 +14,11 @@ namespace Web_API.Controllers
             var Respuesta = LoginFunctions.LoginUser(nombreUsuario,clave);
             return Respuesta;
         }
+
+
+
+
+
+
     }
 }

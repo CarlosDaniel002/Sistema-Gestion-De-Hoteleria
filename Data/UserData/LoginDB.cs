@@ -35,5 +35,16 @@ namespace Data.UserData
                 return connection.QueryFirstOrDefault<string>(query, parameters);
             }
         }
+
+        public Usuario GetUserByUserName(object nombreUsuario)
+        {
+            using (var connection = new SqlConnection(connectionDB.dataBase.ConnectionString))
+            {
+                connection.Open();
+                var query = "SELECT * FROM Usuarios WHERE NombreUsuario = @NombreUsuario";
+                var parameters = new { NombreUsuario = nombreUsuario };
+                return connection.QueryFirstOrDefault<Usuario>(query, parameters);
+            }
+        }
     }
 }

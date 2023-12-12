@@ -21,7 +21,7 @@ namespace Negocio.User
             {
                 return "El usuario no existe.";
             }
-            
+
             string salting = loginDB.GetSaltingForUser(usuario.IdUsuario);
 
             string hashContraseña = GetPassword.GenerateHash(contraseña, GetPassword.StringToByteArray(salting));
