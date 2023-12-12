@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Negocio.Clientes;
 using Negocio.User;
+using Data.Models;
 using System;
 using System.Collections.Generic;
 
@@ -11,9 +12,9 @@ namespace Web_API.Controllers
     public class LoginController : ControllerBase
     {
         [HttpGet("login")]
-        public dynamic Login(string nombreUsuario, string contraseña)
+        public dynamic Login(LoginUser user)
         {
-            var Respuesta = LoginFunctions.LoginUser(nombreUsuario, contraseña);
+            var Respuesta = LoginFunctions.LoginUser(user.Usuario, user.Clave);
             return Respuesta;
         }
     }
