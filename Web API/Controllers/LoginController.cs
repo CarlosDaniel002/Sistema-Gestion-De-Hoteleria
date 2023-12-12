@@ -1,17 +1,19 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Negocio.Clientes;
 using Negocio.User;
+using System;
+using System.Collections.Generic;
 
 namespace Web_API.Controllers
 {
-    [ApiController]
     [Route("[controller]")]
-    public class LoginController : Controller
+    [ApiController]
+    public class LoginController : ControllerBase
     {
-        [HttpPost]
-        public dynamic Get(string nombreUsuario, string clave)
+        [HttpGet("login")]
+        public dynamic Login(string nombreUsuario, string contraseña)
         {
-            var Respuesta = LoginFunctions.LoginUser(nombreUsuario,clave);
+            var Respuesta = LoginFunctions.LoginUser(nombreUsuario, contraseña);
             return Respuesta;
         }
     }
