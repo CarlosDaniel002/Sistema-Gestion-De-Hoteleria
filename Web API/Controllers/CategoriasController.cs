@@ -40,7 +40,7 @@ namespace Web_API.Controllers
         [HttpDelete]
         public Respuesta Delete(IdEliminar Id)
         {
-            Respuesta mensaje = GestionarCategorias.EliminarCategoria(Id.Id, Id.Accion);
+            Respuesta mensaje = GestionarCategorias.EliminarCategoria(Id.Id, Id.Activar);
             return mensaje;
         }
     }
