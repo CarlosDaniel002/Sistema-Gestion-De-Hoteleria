@@ -20,9 +20,7 @@ namespace Data.Models
         public string MetodoPagoC1 { get; set; }
         public string ComentarioR { get; set; }
         public int CantidadHuesped { get; set; }
-       
-      
-        
+        public int Activo { get; internal set; }
     }
 
 }

@@ -21,11 +21,9 @@ namespace Web_API.Controllers
     {
 
         private static connectionsDB conexion = new connectionsDB();
-        
-        
 
-        // GET: api/Reservaciones
-        [HttpGet]
+    // GET: api/Reservaciones
+    [HttpGet]
         public dynamic GetAllReservaciones()
         {
             try
@@ -60,11 +58,11 @@ namespace Web_API.Controllers
 
         // POST: api/Reservaciones
         [HttpPost]
-        public dynamic CrearReservacion([FromBody] Reservacion reservacion)
+        public dynamic CrearReservacion([FromBody] Reservacion nuevareservacion)
         {
             try
             {
-                var idReservacion = ReservacionDB.InsertarReservacion(reservacion);
+                int idReservacion = ReservacionDB.InsertarReservacion(nuevareservacion);
                 return Ok($"Reservación creada con ID: {idReservacion}");
             }
             catch (Exception ex)
@@ -72,6 +70,7 @@ namespace Web_API.Controllers
                 return StatusCode(500, $"Error interno del servidor: {ex.Message}");
             }
         }
+
 
         // PUT: api/Reservaciones/5
         [HttpPut("{id}")]
@@ -102,6 +101,62 @@ namespace Web_API.Controllers
                 return StatusCode(500, $"Error interno del servidor: {ex.Message}");
             }
         }
+
+
+        // EDITAR: api/Reservaciones/5
+        [HttpPost("PagarCuota2/{idReservacion}")]
+        public IActionResult PagarCuota2(int idReservacion, string metodoPagoC2)
+        {
+            try
+            {
+
+                ReservacionDB.PagarCuota2(idReservacion, metodoPagoC2);
+
+
+                return Ok($"Cuota 2 pagada para la Reservación con ID {idReservacion}");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al pagar la cuota 2: {ex.Message}");
+            }
+        }
+        // EDITAR: api/Reservaciones/1
+        [HttpPost("RealizarCheckIn/{idReservacion}")]
+        public IActionResult RealizarCheckIn(int idReservacion)
+        {
+            try
+            {
+
+                ReservacionDB.RealizarCheckIn(idReservacion);
+
+
+                return Ok($"Check-in realizado para la Reservación con ID {idReservacion}");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al realizar el Check-in: {ex.Message}");
+            }
+        }
+        // EDITAR: api/Reservaciones/5
+        [HttpGet("RealizarCheckOut/{idReservacion}")]
+        public IActionResult RealizarCheckOut(int idReservacion)
+        {
+            try
+            {
+
+                ReservacionDB.RealizarCheckOut(idReservacion);
+
+
+                return Ok($"Check-out realizado para la Reservación con ID {idReservacion}");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al realizar el Check-out: {ex.Message}");
+            }
+        }
+
+
+
     }
 
 }

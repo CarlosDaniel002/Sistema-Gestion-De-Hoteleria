@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Data.UserData
 {
-    public class ReservacionDB
+    public class ReservacionDB : ReservacionDBBase
     {
         private static connectionsDB conexion = new connectionsDB();
         private static SqlCommand sqlCommand;
@@ -85,17 +85,6 @@ namespace Data.UserData
             }
         }
 
-
-
-
-
-
-
-
-   
-
-
-
         public static dynamic EliminarReservacion(int id)
         {
             try
@@ -103,7 +92,7 @@ namespace Data.UserData
                 using (conexion)
                 {
                     conexion.abrirConexion();
-                    Query = $"DELETE FROM Reservaciones WHERE IdReservacion = {id}";
+                    Query = $"Update Reservaciones set Activo = 0 where IdReservacion = {id}";
                     sqlCommand = new SqlCommand(Query, conexion.dataBase);
                     sqlCommand.ExecuteNonQuery();
                 }
@@ -121,48 +110,7 @@ namespace Data.UserData
             }
         }
 
-        public static int? ObtenerUltimoIdReservacion()
-        {
-            try
-            {
-                using (conexion)
-                {
-                    conexion.abrirConexion();
-                    Query = "SELECT IDENT_CURRENT('Reservaciones')";
-                    sqlCommand = new SqlCommand(Query, conexion.dataBase);
-                    reader = sqlCommand.ExecuteReader();
-
-                    while (reader.Read())
-                    {
-                        return Convert.ToInt32(reader.GetValue(0));
-                    }
-                }
-            }
-            catch
-            {
-                // Handle exceptions if needed
-            }
-
-            return null;
-        }
-
-        public static void AsignarTokenParaReservacion(int? reservationId, Guid token)
-        {
-            try
-            {
-                using (conexion)
-                {
-                    conexion.abrirConexion();
-                    Query = $"INSERT INTO Token (ID_Reservacion, Token, FechaHora) VALUES ('{reservationId}', '{token}', GETDATE())";
-                    sqlCommand = new SqlCommand(Query, conexion.dataBase);
-                    sqlCommand.ExecuteNonQuery();
-                }
-            }
-            catch
-            {
-                // Handle exceptions if needed
-            }
-        }
+       
 
         public static string ObtenerTokenEnIdReservacion(int reservationId)
         {
@@ -204,7 +152,8 @@ namespace Data.UserData
                 HoraCheckOut = reader.IsDBNull(reader.GetOrdinal("HoraCheckOut")) ? TimeSpan.Zero : reader.GetTimeSpan(reader.GetOrdinal("HoraCheckOut")),
                 MetodoPagoC1 = reader.IsDBNull(reader.GetOrdinal("MetodoPagoC1")) ? null : reader.GetString(reader.GetOrdinal("MetodoPagoC1")),
                 ComentarioR = reader.IsDBNull(reader.GetOrdinal("ComentarioR")) ? null : reader.GetString(reader.GetOrdinal("ComentarioR")),
-                CantidadHuesped = reader.IsDBNull(reader.GetOrdinal("CantidadHuesped")) ? 0 : reader.GetInt32(reader.GetOrdinal("CantidadHuesped"))
+                CantidadHuesped = reader.IsDBNull(reader.GetOrdinal("CantidadHuesped")) ? 0 : reader.GetInt32(reader.GetOrdinal("CantidadHuesped")),
+                Activo=reader.IsDBNull(reader.GetOrdinal("Activo")) ? 0 : reader.GetInt32(reader.GetOrdinal("CantidadHuesped"))
             };
         }
 
@@ -212,56 +161,71 @@ namespace Data.UserData
 
 
 
+        //----------------------------------------------------------------------------------------------------------------
 
-        public static dynamic InsertarReservacion(Reservacion reservation)
+
+        public static int InsertarReservacion(Reservacion nuevaReservacion)
         {
             try
             {
-                if (reservation.IdReservacion == 0)
+                using (var conexion = new connectionsDB())
                 {
-                    using (conexion)
-                    {
-                        conexion.abrirConexion();
+                    conexion.abrirConexion();
 
-                        Query = "INSERT INTO Reservaciones (IdCliente, IdHabitacion, CantidadHuesped, FechaCheckIn, FechaCheckOut, HoraCheckIn, HoraCheckOut, MetodoPagoC1, ComentarioR) " +
-                                "VALUES (@IdCliente, @IdHabitacion, @CantidadHuesped, @FechaCheckIn, @FechaCheckOut, @HoraCheckIn, @HoraCheckOut, @MetodoPagoC1, @ComentarioR);";
+                    // Utilizar una consulta INSERT directa
+                    Query = "INSERT INTO Reservaciones (IdHabitacion, CantidadHuesped, IdCliente, FechaNow, FechaCheckIn, FechaCheckOut, HoraCheckIn, HoraCheckOut, PagoC1, MetodoPagoC1, Activo, ComentarioR) " +
+                     "VALUES(@IdHabitacion, @CantidadHuesped, @IdCliente, GETDATE(), @FechaCheckIn, @FechaCheckOut, @HoraCheckIn, @HoraCheckOut, 1, @MetodoPagoC1, 1, @ComentarioR); " +
+                     "SELECT SCOPE_IDENTITY();";
 
-                        sqlCommand = new SqlCommand(Query, conexion.dataBase);
-                        sqlCommand.Parameters.AddWithValue("@IdCliente", reservation.IdCliente);
-                        sqlCommand.Parameters.AddWithValue("@IdHabitacion", reservation.IdHabitacion);
-                        sqlCommand.Parameters.AddWithValue("@CantidadHuesped", reservation.CantidadHuesped);
-                        sqlCommand.Parameters.AddWithValue("@FechaCheckIn", reservation.FechaCheckIn);
-                        sqlCommand.Parameters.AddWithValue("@FechaCheckOut", reservation.FechaCheckOut);
-                        sqlCommand.Parameters.AddWithValue("@HoraCheckIn", reservation.HoraCheckIn);
-                        sqlCommand.Parameters.AddWithValue("@HoraCheckOut", reservation.HoraCheckOut);
+                    // Configurar el comando SQL con parámetros
+                    sqlCommand = new SqlCommand(Query, conexion.dataBase);
+                    sqlCommand.Parameters.AddWithValue("@IdCliente", nuevaReservacion.IdCliente);
+                    sqlCommand.Parameters.AddWithValue("@IdHabitacion", nuevaReservacion.IdHabitacion);
+                    sqlCommand.Parameters.AddWithValue("@FechaCheckIn", nuevaReservacion.FechaCheckIn);
+                    sqlCommand.Parameters.AddWithValue("@FechaCheckOut", nuevaReservacion.FechaCheckOut);
+                    sqlCommand.Parameters.AddWithValue("@HoraCheckIn", nuevaReservacion.HoraCheckIn);
+                    sqlCommand.Parameters.AddWithValue("@HoraCheckOut", nuevaReservacion.HoraCheckOut);
+                    sqlCommand.Parameters.AddWithValue("@MetodoPagoC1", nuevaReservacion.MetodoPagoC1 );
+                    sqlCommand.Parameters.AddWithValue("@ComentarioR", nuevaReservacion.ComentarioR);
+                    sqlCommand.Parameters.AddWithValue("@CantidadHuesped", nuevaReservacion.CantidadHuesped);
+                    sqlCommand.Parameters.AddWithValue("@Activo", nuevaReservacion.Activo);
 
-                        sqlCommand.Parameters.AddWithValue("@MetodoPagoC1", reservation.MetodoPagoC1 ?? (object)DBNull.Value);
-                        sqlCommand.Parameters.AddWithValue("@ComentarioR", reservation.ComentarioR ?? (object)DBNull.Value);
 
-                        sqlCommand.ExecuteNonQuery();
-                    }
 
-                    var reservationId = ObtenerUltimoIdReservacion();
-                    if (reservationId != null)
-                    {
-                        var token = Guid.NewGuid();
-                        AsignarTokenParaReservacion(reservationId, token);
-                    }
+                    // Ejecutar la consulta y obtener el ID de la reservación recién insertada
+                    int idReservacion = Convert.ToInt32(sqlCommand.ExecuteScalar());
 
-                    return reservationId ?? 0;
+                    conexion.cerrarConexion();
+
+                    Console.WriteLine($"Se insertó una nueva reservación en la base de datos con ID {idReservacion}.");
+                    return idReservacion;
                 }
-
-                return Respuesta.getRespuesta("El ID de la reservación debe ser 0 para realizar una inserción.", "0000", "");
             }
             catch (SqlException Error)
             {
-                return Respuesta.getRespuesta("Fallo al conectarse a la DB.", $"{Error.Number}", $"{Error.Errors}");
+                Console.WriteLine($"Error al insertar la reservación: {Error}");
+                throw; // Puedes manejar este error según sea necesario
             }
             catch (Exception Error)
             {
-                return Respuesta.getRespuesta("Error general.", $"{Error.HResult}", $"{Error.Message} ");
+                Console.WriteLine($"Error general al insertar la reservación: {Error}");
+                throw; // Puedes manejar este error según sea necesario
             }
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
         //actualizar reservacion
@@ -307,7 +271,132 @@ namespace Data.UserData
         }
 
 
+
+
+
+
+        public static Respuesta PagarCuota2(int idReservacion, string metodoPagoC2)
+        {
+            try
+            {
+                using (var conexion = new connectionsDB())
+                {
+                    conexion.abrirConexion();
+
+                    // Utilizar una consulta UPDATE para realizar el pago de la segunda cuota
+                    Query = "UPDATE Reservaciones SET PagoC2 = 1, MetodoPagoC2 = @MetodoPagoC2 WHERE IdReservacion = @Id";
+
+                    // Configurar el comando SQL con parámetros
+                    sqlCommand = new SqlCommand(Query, conexion.dataBase);
+                    sqlCommand.Parameters.AddWithValue("@MetodoPagoC2", metodoPagoC2);
+                    sqlCommand.Parameters.AddWithValue("@Id", idReservacion);
+
+                    // Ejecutar la consulta
+                    sqlCommand.ExecuteNonQuery();
+
+                    conexion.cerrarConexion();
+
+                    Console.WriteLine($"Se realizó el pago de la segunda cuota para la reservación con ID {idReservacion}.");
+                    return Respuesta.getRespuesta("Se realizó el pago de la segunda cuota.", "0000", "");
+                }
+            }
+            catch (SqlException Error)
+            {
+                Console.WriteLine($"Error al realizar el pago de la segunda cuota: {Error}");
+                return Respuesta.getRespuesta("Error al realizar el pago de la segunda cuota.", "9998", $"{Error}");
+            }
+            catch (Exception Error)
+            {
+                Console.WriteLine($"Error general al realizar el pago de la segunda cuota: {Error}");
+                return Respuesta.getRespuesta("Error general al realizar el pago de la segunda cuota.", "9990", $"{Error}");
+            }
+        }
+
+        public static Respuesta RealizarCheckIn(int idReservacion)
+        {
+            try
+            {
+                using (var conexion = new connectionsDB())
+                {
+                    conexion.abrirConexion();
+
+                    // Utilizar una consulta UPDATE para realizar el check-in
+                    Query = "UPDATE Reservaciones SET EstadoCheckIn = 1 WHERE IdReservacion = @Id";
+
+                    // Configurar el comando SQL con parámetros
+                    sqlCommand = new SqlCommand(Query, conexion.dataBase);
+                    sqlCommand.Parameters.AddWithValue("@Id", idReservacion);
+
+                    // Ejecutar la consulta
+                    sqlCommand.ExecuteNonQuery();
+
+                    conexion.cerrarConexion();
+
+                    Console.WriteLine($"Se realizó el check-in para la reservación con ID {idReservacion}.");
+                    return Respuesta.getRespuesta("Se realizó el check-in.", "0000", "");
+                }
+            }
+            catch (SqlException Error)
+            {
+                Console.WriteLine($"Error al realizar el check-in: {Error}");
+                return Respuesta.getRespuesta("Error al realizar el check-in.", "9998", $"{Error}");
+            }
+            catch (Exception Error)
+            {
+                Console.WriteLine($"Error general al realizar el check-in: {Error}");
+                return Respuesta.getRespuesta("Error general al realizar el check-in.", "9990", $"{Error}");
+            }
+        }
+
+        public static Respuesta RealizarCheckOut(int idReservacion)
+        {
+            try
+            {
+                using (var conexion = new connectionsDB())
+                {
+                    conexion.abrirConexion();
+
+                    // Utilizar una consulta UPDATE para realizar el check-out
+                    Query = "UPDATE Reservaciones SET EstadoCheckOut = 1 WHERE IdReservacion = @Id";
+
+                    // Configurar el comando SQL con parámetros
+                    sqlCommand = new SqlCommand(Query, conexion.dataBase);
+                    sqlCommand.Parameters.AddWithValue("@Id", idReservacion);
+
+                    // Ejecutar la consulta
+                    sqlCommand.ExecuteNonQuery();
+
+                    conexion.cerrarConexion();
+
+                    Console.WriteLine($"Se realizó el check-out para la reservación con ID {idReservacion}.");
+                    return Respuesta.getRespuesta("Se realizó el check-out.", "0000", "");
+                }
+            }
+            catch (SqlException Error)
+            {
+                Console.WriteLine($"Error al realizar el check-out: {Error}");
+                return Respuesta.getRespuesta("Error al realizar el check-out.", "9998", $"{Error}");
+            }
+            catch (Exception Error)
+            {
+                Console.WriteLine($"Error general al realizar el check-out: {Error}");
+                return Respuesta.getRespuesta("Error general al realizar el check-out.", "9990", $"{Error}");
+            }
+        }
+
+
+
+
+
+
+
+
     }
 }
+
+
+  
+
+
 
 

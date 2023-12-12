@@ -39,6 +39,23 @@ namespace Negocio.Recervaciones
         {
             return ReservacionDB.EliminarReservacion(id);
         }
+
+        //--------------------------------------------------------------------------------------------------
+        //Metodos nuevos
+        public Respuesta PagarCuota2(int idReservacion, string metodoPagoC2)
+        {
+            return ReservacionDB.PagarCuota2(idReservacion, metodoPagoC2);
+        }
+
+        public Respuesta RealizarCheckIn(int idReservacion)
+        {
+            return ReservacionDB.RealizarCheckIn(idReservacion);
+        }
+
+        public Respuesta RealizarCheckOut(int idReservacion)
+        {
+            return ReservacionDB.RealizarCheckOut(idReservacion);
+        }
     }
 
 }
