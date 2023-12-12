@@ -10,7 +10,7 @@ namespace Data
 {
     public class connectionsDB : IDisposable
     {
-        private string urlConexion = "Data Source=DESKTOP-O2CPJFI;Initial Catalog=BDHotel;Integrated Security=True;";
+        private string urlConexion = "Data Source=SQL8002.site4now.net; initial Catalog=db_aa062b_pfg10itla; user ID=db_aa062b_pfg10itla_admin;Password=PFG10ITLA";
 
         internal SqlConnection dataBase = new SqlConnection();
         private bool disposedValue;

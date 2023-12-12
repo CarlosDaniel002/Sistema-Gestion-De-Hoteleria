@@ -85,17 +85,6 @@ namespace Data.UserData
             }
         }
 
-
-
-
-
-
-
-
-   
-
-
-
         public static dynamic EliminarReservacion(int id)
         {
             try
@@ -103,7 +92,7 @@ namespace Data.UserData
                 using (conexion)
                 {
                     conexion.abrirConexion();
-                    Query = $"DELETE FROM Reservaciones WHERE IdReservacion = {id}";
+                    Query = $"Update Reservaciones set Activo = 0 where IdReservacion = {id}";
                     sqlCommand = new SqlCommand(Query, conexion.dataBase);
                     sqlCommand.ExecuteNonQuery();
                 }
@@ -208,11 +197,6 @@ namespace Data.UserData
             };
         }
 
-
-
-
-
-
         public static dynamic InsertarReservacion(Reservacion reservation)
         {
             try
@@ -262,7 +246,6 @@ namespace Data.UserData
                 return Respuesta.getRespuesta("Error general.", $"{Error.HResult}", $"{Error.Message} ");
             }
         }
-
 
         //actualizar reservacion
         public static Respuesta ActualizarReservacion(int id, Reservacion reservacion)
