@@ -1,0 +1,100 @@
+/*------------------------------------------*/
+ /*------------------CUERPO------------------*/
+/*------------------------------------------*/
+#contenido {
+    position: relative;
+    background-color: #F5F5EF;
+    padding: 40px;
+    margin-top: 3%;
+    margin-left:6%;
+    width: 88%;
+    border-radius: 15px;
+    -webkit-box-shadow: 4px 4px 21px 4px rgba(215,219,221,1);
+    -moz-box-shadow: 4px 4px 21px 4px rgba(215,219,221,1);
+    box-shadow: 4px 4px 21px 4px rgba(215,219,221,1);
+
+}
+
+ /*------------------Index------------------*/
+
+.color1{color: #0C5A79;}
+
+#card{
+    background-color: #00CFCB;
+    -webkit-box-shadow: inset 0px 2px 133px 17px rgba(0,175,192,0.93);
+-moz-box-shadow: inset 0px 2px 133px 17px rgba(0,175,192,0.93);
+box-shadow: inset 0px 2px 133px 17px rgba(0,175,192,0.93);
+    height: 35vh;
+    margin-top: 10px;
+    border: 0px solid;
+    border-radius: 6px;
+    font-size: 40px;
+}
+ /*------------------Sub Menu------------------*/
+ #sub-titulo {
+    color: #00AFC0;
+    font-weight: 600;
+  }
+  #btn-add{
+    background-color: #00AFC0;
+    color: #fff;  
+    display: inline-block;
+    margin: 0;
+    float: right;
+    margin-bottom: 40px;
+    margin: 0 5px;
+}
+
+.btn-otros{
+    float: right; 
+    margin: 2px 5px;
+}
+
+.modal-content{ 
+    padding-left: 20px; 
+    padding-right: 20px;
+}
+
+table{
+    font-size: 13px;
+    margin-bottom: 0px;
+    padding-bottom: 0px;
+}
+table thead {
+    font-size: 14px;
+} 
+
+#btn-opcion{
+    font-size: 17px;
+    padding: 0 5px;
+    margin: 0 3px;   
+    border: 0px solid black;
+}
+#btn-tabla{
+    margin-top: 10px;
+    float: right;
+}
+#seccionBtn:hover{
+    background-color: #F5F5EF;
+    color: #545454;
+    cursor: default;
+}
+
+.img-adduser {
+    width: 60%;
+    display: block;
+    margin: auto;
+}
+
+.img-adduser {
+    width: 60%;
+    display: block;
+    margin: auto;
+}
+
+.dropdown-item i {
+    margin-right: 10px;
+}
+form {
+    color: rgb(77, 76, 76); /* Puedes ajustar el color según tus preferencias */
+  }

@@ -1,105 +1,66 @@
-/* Estilos para ClienteForm */
-label{
-  display: block;
-}
-span{
-  display: block;
-  color: tomato;
-  font-size: x-small;
+/* styles.css */
+
+body {
+  font-family: 'Open Sans', sans-serif;
 }
 
-:root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+#NavPadding {
+  padding: 0 8%;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
+#logo {
+  margin-right: 12%;
+  color: white;
+  font-size: 24px;
+  text-decoration: none;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+.logo-img {
+  width: 55px;
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-/* Clases para el nav */
-.navbar {
-  padding: 0;
+#navmenu .container-fluid {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: var(--clr-main);
 }
 
-.logo {
-  text-decoration: none;
-  color: black;
+#SubMenu {
+  margin-top: 2%;
 }
 
-.menu {
-  list-style-type: none;
+#navmenu .navbar-nav {
   display: flex;
-  align-items: center;
-  gap: 1rem;
+  justify-content: space-between;
+  width: 100%;
 }
 
-.menu-link {
-  text-decoration: none;
+#navmenu .navbar-nav a {
+  padding: 10px 20px;
+  text-align: center;
+}
+
+.navbar-nav a {
+  color: #a7adad;
+}
+
+.navbar-nav a:hover {
   color: black;
-  font-size: 1.2rem;
 }
 
-.menu-link:hover {
-  text-decoration: underline;
+#herramienta {
+  color: #0C5A79;
+  font-size: 20px;
 }
 
-.logo1{
-  height: 32px;
+.dropdown-menu {
+  left: auto !important;
+  right: 0 !important;
+  width: 230px;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
+@media (min-width: 992px) {
+  .navbar-nav .dropdown:hover .dropdown-menu {
+    display: block;
   }
 }

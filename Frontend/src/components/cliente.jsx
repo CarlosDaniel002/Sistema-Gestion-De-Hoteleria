@@ -1,7 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
+import Navigation from "../components/Navigation";
+import './css/style.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faAngleLeft, faAngleRight, faFileCirclePlus, faMagnifyingGlass} from '@fortawesome/free-solid-svg-icons';
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
+
 import axios from 'axios';
 import {useForm} from 'react-hook-form'
-import Navigation from './Navigation';
+
+
 const API_URL = "https://pfg10itla-001-site1.gtempurl.com/Clientes";
 import 'bootstrap/dist/css/bootstrap.min.css';
 const Cliente = () => {
