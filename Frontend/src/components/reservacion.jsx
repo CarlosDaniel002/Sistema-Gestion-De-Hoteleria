@@ -6,7 +6,7 @@ import { faAngleLeft, faAngleRight, faFileCirclePlus, faMagnifyingGlass, faPenTo
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
-import Clientes from "../components/clientesp";
+
 function reservacion() {
     {/* Del Modal*/}
     const [modalShow, setModalShow] = useState(false);
@@ -114,6 +114,130 @@ function reservacion() {
       );   
     } 
 
+    {/*Otros Modales */}
+    const [modalCInShow, setModalCInShow] = useState(false);
+    const [modalCOutShow, setModalCOutShow] = useState(false);
+    const [modalPagoShow, setModalPagoShow] = useState(false);
+ 
+    const ModalCIn = (props) => {
+       return (
+          <Modal {...props} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
+             <Modal.Header closeButton>
+                <Modal.Title id="contained-modal-title-vcenter" className="fw-semibold fs-4">
+                   Realizar Check-In
+                </Modal.Title>
+             </Modal.Header>
+             <Modal.Body>
+               <form className="row g-3">
+               <div className="col-md-6">
+                 <label htmlFor="validationDefault01" className="form-label">
+                   ID de Reservacion
+                 </label>
+                 <input type="number" className="form-control" id="validationDefault01" required />
+               </div>
+               <div className="col-md-6">
+                 <label htmlFor="validationDefault05" className="form-label">
+                   Estado de Check-In
+                 </label>
+                 <input
+                   type="number"
+                   className="form-control"
+                   id="validationDefault05"
+                   value="1"
+                   readOnly
+                   required
+                 />
+                 </div>
+               </form>
+             </Modal.Body>
+             <Modal.Footer>
+                <button className="btn btn-dark col-md-3">Agregar</button>
+             </Modal.Footer>
+          </Modal>
+       );
+    }
+    const ModalCOut = (props) => {
+       return (
+          <Modal {...props} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
+             <Modal.Header closeButton>
+                <Modal.Title id="contained-modal-title-vcenter" className="fw-semibold fs-4">
+                   Realizar Check-Out
+                </Modal.Title>
+             </Modal.Header>
+             <Modal.Body>
+             <form className="row g-3">
+               <div className="col-md-6">
+                 <label htmlFor="validationDefault01" className="form-label">
+                   ID de Reservacion
+                 </label>
+                 <input type="number" className="form-control" id="validationDefault01" required />
+               </div>
+               <div className="col-md-6">
+                 <label htmlFor="validationDefault05" className="form-label">
+                   Estado de Check-Out
+                 </label>
+                 <input
+                   type="number"
+                   className="form-control"
+                   id="validationDefault05"
+                   value="1"
+                   readOnly
+                   required
+                 />
+               </div>
+             </form>
+             </Modal.Body>
+             <Modal.Footer>
+                <button className="btn btn-dark col-md-3">Agregar</button>
+             </Modal.Footer>
+          </Modal>
+       );
+    }
+    const ModalPago = (props) => {
+       return (
+          <Modal {...props} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
+             <Modal.Header closeButton>
+                <Modal.Title id="contained-modal-title-vcenter" className="fw-semibold fs-4">
+                Realizar el 2do Pago
+                </Modal.Title>
+             </Modal.Header>
+             <Modal.Body>
+             <form className="row g-3">
+               <div className="col-md-6">
+                 <label htmlFor="validationDefault01" className="form-label">
+                   ID de Reservacion
+                 </label>
+                 <input type="number" className="form-control" id="validationDefault01" required />
+               </div>
+ 
+               <div className="col-md-6">
+                 <label htmlFor="validationDefault02" className="form-label">
+                   Metodo de pago
+                 </label>
+                 <input type="text" className="form-control" id="validationDefault02" maxLength="200" required />
+               </div>
+ 
+               <div className="col-md-6">
+                 <label htmlFor="validationDefault03" className="form-label">
+                   Pago
+                 </label>
+                 <input type="number" className="form-control" id="validationDefault03" value="1" readOnly required />
+               </div>
+ 
+               <div className="col-md-6">
+                 <label htmlFor="validationDefault05" className="form-label">
+                   Fecha
+                 </label>
+                 <input type="date" className="form-control" id="validationDefault05" required />
+               </div>
+             </form>
+             </Modal.Body>
+             <Modal.Footer>
+                <button className="btn btn-dark col-md-3">Agregar</button>
+             </Modal.Footer>
+          </Modal>
+       );
+    }
         {/* De La Tabla */}
         const [paginaActual, setPaginaActual] = useState(0);
         const filasPorPagina = 5;
@@ -170,12 +294,23 @@ function reservacion() {
 
       {/* Boton agregar, llama modal */}
       <div className="col-md-8">
-      <button onClick={() => setModalShow(true)} className="btn" id="btn-add"><FontAwesomeIcon icon={faFileCirclePlus} /> Agregar  Reservaciones</button>
+      <button onClick={() => setModalShow(true)} className="btn" id="btn-add"> <FontAwesomeIcon icon={faFileCirclePlus} /> Agregar  Reservaciones</button>
         <ModalInsertar  show={modalShow} onHide={() => setModalShow(false)}/>
-        <button type="button" class="btn btn-secondary btn-otros"><FontAwesomeIcon icon={faSackDollar}/> 2do Pago</button> 
-      <button type="button" class="btn btn-outline-secondary btn-otros"><FontAwesomeIcon icon={faBuildingCircleArrowRight}/> Check-Out</button> 
-      <button type="button" class="btn btn-outline-secondary btn-otros"><FontAwesomeIcon icon={faBuildingCircleCheck} /> Check-In</button> 
-      </div>
+        <button onClick={() => setModalCInShow(true)} className="btn btn-outline-secondary btn-otros">
+               <FontAwesomeIcon icon={faBuildingCircleCheck} /> Check-In
+            </button>
+            <ModalCIn show={modalCInShow} onHide={() => setModalCInShow(false)} />
+
+            <button onClick={() => setModalPagoShow(true)} className="btn btn-secondary btn-otros">
+               <FontAwesomeIcon icon={faSackDollar} /> 2do Pago
+            </button>
+            <ModalPago show={modalPagoShow} onHide={() => setModalPagoShow(false)} />
+
+            <button onClick={() => setModalCOutShow(true)} className="btn btn-outline-secondary btn-otros">
+               <FontAwesomeIcon icon={faBuildingCircleArrowRight} /> Check-Out
+            </button>
+            <ModalCOut show={modalCOutShow} onHide={() => setModalCOutShow(false)} />
+         </div>
 
       {/* Buscador */}
       <div className="col-md-12">
