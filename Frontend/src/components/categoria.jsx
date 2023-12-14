@@ -17,7 +17,7 @@ import React, { useState, useEffect } from "react";
 import Navigation from "../components/Navigation";
 import './css/style.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAngleLeft, faAngleRight, faFileCirclePlus, faMagnifyingGlass} from '@fortawesome/free-solid-svg-icons';
+import { faAngleLeft, faAngleRight, faFileCirclePlus, faMagnifyingGlass, faPenToSquare, faTrashCan} from '@fortawesome/free-solid-svg-icons';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
@@ -183,10 +183,10 @@ const Category = () => {
               <td>Nada</td>
               <td>
                 <button type="button" className="btn btn-primary btn-sm" id="btn-opcion">
-                  <i className="fa-regular fa-pen-to-square"></i>
+                <FontAwesomeIcon icon={faPenToSquare} />
                 </button>
                 <button type="button" className="btn btn-danger btn-sm" id="btn-opcion">
-                  <i className="fa-regular fa-trash-can"></i>
+                <FontAwesomeIcon icon={faTrashCan} />
                 </button>
               </td>
             </tr>
@@ -201,10 +201,10 @@ const Category = () => {
               <td>Nada</td>
               <td>
                 <button type="button" className="btn btn-primary btn-sm" id="btn-opcion">
-                  <i className="fa-regular fa-pen-to-square"></i>
+                <FontAwesomeIcon icon={faPenToSquare} />
                 </button>
                 <button type="button" className="btn btn-danger btn-sm" id="btn-opcion">
-                  <i className="fa-regular fa-trash-can"></i>
+                <FontAwesomeIcon icon={faTrashCan} />
                 </button>
               </td>
             </tr>         
@@ -220,7 +220,6 @@ const Category = () => {
         </button>
         <button type="button" className="btn btn-outline-secondary btn-sm" id="seccionBtn">-</button>
         <button type="button" className="btn btn-secondary btn-sm" onClick={irHaciaAdelante}>
-          <i className="fa-solid fa-angle-right"></i>
           <FontAwesomeIcon icon={faAngleRight} />
         </button>
       </div>
