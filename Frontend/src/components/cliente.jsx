@@ -6,13 +6,11 @@ import { faAngleLeft, faAngleRight, faFileCirclePlus, faMagnifyingGlass} from '@
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
-
+import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 import {useForm} from 'react-hook-form'
-
-
 const API_URL = "https://pfg10itla-001-site1.gtempurl.com/Clientes";
-import 'bootstrap/dist/css/bootstrap.min.css';
+
 const Cliente = () => {
   const {
     register,
@@ -37,6 +35,7 @@ const Cliente = () => {
     try {
       const response = await axios.get(API_URL);
       setClientes(response.data);
+      console.log(response.data);
     } catch (error) {
       console.error('Error al cargar clientes:', error);
     }
