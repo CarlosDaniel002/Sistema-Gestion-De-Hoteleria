@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import Navigation from "../components/Navigation";
 import './css/style.css';
@@ -6,7 +7,7 @@ import { faAngleLeft, faAngleRight, faFileCirclePlus, faMagnifyingGlass, faPenTo
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
-function habitacion() {
+function clientesp() {
   {/* Del Modal*/}
   const [modalShow, setModalShow] = useState(false);
   const ModalInsertar = (props) => {
@@ -19,42 +20,34 @@ function habitacion() {
       >
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter" className="fw-semibold fs-4">
-          Agregar Habitacion
+          Agregar Cliente
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
 
 
         <form className="row g-3">
+
         <div className="col-md-6">
-          <label htmlFor="validationDefault01" className="form-label">Tipo de Categoría</label>
-          <select className="form-select" id="validationDefault01" required>
-            <option selected disabled value="">Elige</option>
-            <option value="1">Primeum</option>
-            <option value="2">Primeum</option>
-            <option value="3">Primeum</option>
-          </select>
+          <label htmlFor="validationDefault01" className="form-label">Nombres</label>
+          <input type="text" className="form-control" id="validationDefault01" maxLength="100" required />
         </div>
 
         <div className="col-md-6">
-          <label htmlFor="validationDefault02" className="form-label">Estado de habitación</label>
-          <select className="form-select" id="validationDefault02" required>
-            <option selected disabled value="">Elige</option>
-            <option value="Disponible">Disponible</option>
-            <option value="Ocupada">Ocupada</option>
-            <option value="Reservada">Reservada</option>
-          </select>
+          <label htmlFor="validationDefault02" className="form-label">Apellidos</label>
+          <input type="text" className="form-control" id="validationDefault02" maxLength="100" required />
         </div>
 
-        <div className="col-md-12">
-          <label htmlFor="validationDefault03" className="form-label">Ubicación de la habitación</label>
-          <input type="text" className="form-control" id="validationDefault03" placeholder="Ala, piso, No." maxLength="255" required />
+        <div className="col-md-6">
+          <label htmlFor="validationDefault05" className="form-label">Teléfono</label>
+          <input type="tel" className="form-control" id="validationDefault05" placeholder="809 934 4434" maxLength="12" required />
         </div>
 
-        <div className="col-md-12">
-          <label htmlFor="validationDefault04" className="form-label">Comentario</label>
-          <textarea className="form-control" id="validationDefault04"></textarea>
+        <div className="col-md-6">
+          <label htmlFor="validationDefault05" className="form-label">Correo</label>
+          <input type="email" className="form-control" id="validationDefault05" placeholder="correo@gmail.com" maxLength="50" required />
         </div>
+
       </form>
 
 
@@ -115,16 +108,15 @@ function habitacion() {
 
   return (
     <>
-    <Navigation/>
 
     <div className="row g-3" id="contenido">
       <div className="col-md-9">
-        <h3 id="sub-titulo">Habitaciones</h3>
+        <h3 id="sub-titulo">Clientes</h3>
       </div>
 
       {/* Boton agregar, llama modal */}
       <div className="col-md-3">
-      <button onClick={() => setModalShow(true)} className="btn" id="btn-add"><FontAwesomeIcon icon={faFileCirclePlus} /> Agregar Habitaciones</button>
+      <button onClick={() => setModalShow(true)} className="btn" id="btn-add"><FontAwesomeIcon icon={faFileCirclePlus} /> Agregar Clientes</button>
         <ModalInsertar
           show={modalShow}
           onHide={() => setModalShow(false)}
@@ -147,19 +139,21 @@ function habitacion() {
           <table className="table table-hover align-middle table-sm" id="PTabla" style={{ marginBottom: '0px' }}>
             <thead className="table-light">
               <tr>
-                <th scope="col">ID Habitación</th>
-                <th scope="col">Categoria</th>
-                <th scope="col">Ubicación</th>
-                <th scope="col">Estado</th>
+                <th scope="col">ID Cliente</th>
+                <th scope="col">Nombres</th>
+                <th scope="col">Apellidos</th>
+                <th scope="col">Teléfono</th>
+                <th scope="col">Correo</th>
                 <th scope="col">Opciones</th>
               </tr>
             </thead>
             <tbody>
               <tr>
                 <th scope="row">1</th>
-                <td>Primeum</td>
-                <td>Ala norte, piso 1, habitacion no. 23</td>
-                <td>Ocupada</td>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td>809 998 9889</td>
+                <td>@mdo</td>
                 <td>
                 <button type="button" className="btn btn-primary btn-sm" id="btn-opcion">
                 <FontAwesomeIcon icon={faPenToSquare} />
@@ -170,20 +164,7 @@ function habitacion() {
               </td>
               </tr>
 
-              <tr>
-                <th scope="row">6</th>
-                <td>Primeum</td>
-                <td>Ala norte, piso 1, habitacion no. 23</td>
-                <td>Ocupada</td>
-                <td>
-                <button type="button" className="btn btn-primary btn-sm" id="btn-opcion">
-                <FontAwesomeIcon icon={faPenToSquare} />
-                </button>
-                <button type="button" className="btn btn-danger btn-sm" id="btn-opcion">
-                <FontAwesomeIcon icon={faTrashCan} />
-                </button>
-              </td>
-              </tr>
+              {/* Puedes agregar más filas aquí con el mismo formato */}
             </tbody>
           </table>
         </div>
@@ -206,4 +187,4 @@ function habitacion() {
   )
 }
 
-export default habitacion
+export default clientesp
