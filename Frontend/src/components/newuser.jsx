@@ -2,12 +2,14 @@ import React from 'react'
 import Navigation from "../components/Navigation";
 import './css/style.css';
 
+import img from './img/Add-User.png';
+
 const newuser = () => {
   return (
-    <div><Navigation/>
+    <><Navigation/>
     <div className="row g-3" id="contenido">
     <div className="col-md-6">
-      <img src="img/Add-User.png" className="img-adduser" alt="Add User" />
+      <img src={img} className="img-adduser" alt="Add User" />
     </div>
 
     <div className="col-md-6">
@@ -28,12 +30,7 @@ const newuser = () => {
 
           <div className="form-group col-md-12 p-2">
             <label htmlFor="inputPassword4">Contraseña</label>
-            <input
-              type="password"
-              className="form-control"
-              id="inputPassword4"
-              placeholder="Contraseña"
-            />
+            <input type="password" className="form-control" id="inputPassword4" placeholder="Contraseña" />
           </div>
         </div>
 
@@ -45,7 +42,7 @@ const newuser = () => {
       </form>
     </div>
   </div>
-  </div>
+  </>
   )
 }
 

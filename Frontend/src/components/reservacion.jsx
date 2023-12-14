@@ -139,14 +139,7 @@ function reservacion() {
                  <label htmlFor="validationDefault05" className="form-label">
                    Estado de Check-In
                  </label>
-                 <input
-                   type="number"
-                   className="form-control"
-                   id="validationDefault05"
-                   value="1"
-                   readOnly
-                   required
-                 />
+                 <input type="number" className="form-control" id="validationDefault05" value="1" readOnly required/>
                  </div>
                </form>
              </Modal.Body>
@@ -177,13 +170,7 @@ function reservacion() {
                    Estado de Check-Out
                  </label>
                  <input
-                   type="number"
-                   className="form-control"
-                   id="validationDefault05"
-                   value="1"
-                   readOnly
-                   required
-                 />
+                   type="number" className="form-control" id="validationDefault05" value="1" readOnly required />
                </div>
              </form>
              </Modal.Body>
@@ -294,22 +281,17 @@ function reservacion() {
 
       {/* Boton agregar, llama modal */}
       <div className="col-md-8">
-      <button onClick={() => setModalShow(true)} className="btn" id="btn-add"> <FontAwesomeIcon icon={faFileCirclePlus} /> Agregar  Reservaciones</button>
+        <button onClick={() => setModalShow(true)} className="btn" id="btn-add"> <FontAwesomeIcon icon={faFileCirclePlus} /> Agregar  Reservaciones</button>
         <ModalInsertar  show={modalShow} onHide={() => setModalShow(false)}/>
-        <button onClick={() => setModalCInShow(true)} className="btn btn-outline-secondary btn-otros">
-               <FontAwesomeIcon icon={faBuildingCircleCheck} /> Check-In
-            </button>
-            <ModalCIn show={modalCInShow} onHide={() => setModalCInShow(false)} />
 
-            <button onClick={() => setModalPagoShow(true)} className="btn btn-secondary btn-otros">
-               <FontAwesomeIcon icon={faSackDollar} /> 2do Pago
-            </button>
-            <ModalPago show={modalPagoShow} onHide={() => setModalPagoShow(false)} />
+        <button onClick={() => setModalPagoShow(true)} className="btn btn-secondary btn-otros"> <FontAwesomeIcon icon={faSackDollar} /> 2do Pago </button>
+        <ModalPago show={modalPagoShow} onHide={() => setModalPagoShow(false)} />
+              
+        <button onClick={() => setModalCInShow(true)} className="btn btn-outline-secondary btn-otros"> <FontAwesomeIcon icon={faBuildingCircleCheck} /> Check-In</button>
+        <ModalCIn show={modalCInShow} onHide={() => setModalCInShow(false)} />
 
-            <button onClick={() => setModalCOutShow(true)} className="btn btn-outline-secondary btn-otros">
-               <FontAwesomeIcon icon={faBuildingCircleArrowRight} /> Check-Out
-            </button>
-            <ModalCOut show={modalCOutShow} onHide={() => setModalCOutShow(false)} />
+          <button onClick={() => setModalCOutShow(true)} className="btn btn-outline-secondary btn-otros"> <FontAwesomeIcon icon={faBuildingCircleArrowRight} /> Check-Out</button>
+          <ModalCOut show={modalCOutShow} onHide={() => setModalCOutShow(false)} />
          </div>
 
       {/* Buscador */}

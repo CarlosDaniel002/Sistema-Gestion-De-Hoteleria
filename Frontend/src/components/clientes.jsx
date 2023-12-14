@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from "react";
-import Navigation from "../components/Navigation";
+import Navigation from "./Navigation";
 import './css/style.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleLeft, faAngleRight, faFileCirclePlus, faMagnifyingGlass, faPenToSquare, faTrashCan} from '@fortawesome/free-solid-svg-icons';
@@ -108,6 +108,7 @@ function clientesp() {
 
   return (
     <>
+    <Navigation/>
 
     <div className="row g-3" id="contenido">
       <div className="col-md-9">
@@ -139,21 +140,19 @@ function clientesp() {
           <table className="table table-hover align-middle table-sm" id="PTabla" style={{ marginBottom: '0px' }}>
             <thead className="table-light">
               <tr>
-                <th scope="col">ID Cliente</th>
-                <th scope="col">Nombres</th>
-                <th scope="col">Apellidos</th>
-                <th scope="col">Teléfono</th>
-                <th scope="col">Correo</th>
+                <th scope="col">ID Habitación</th>
+                <th scope="col">Categoria</th>
+                <th scope="col">Ubicación</th>
+                <th scope="col">Estado</th>
                 <th scope="col">Opciones</th>
               </tr>
             </thead>
             <tbody>
               <tr>
                 <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>809 998 9889</td>
-                <td>@mdo</td>
+                <td>Primeum</td>
+                <td>Ala norte, piso 1, habitacion no. 23</td>
+                <td>Ocupada</td>
                 <td>
                 <button type="button" className="btn btn-primary btn-sm" id="btn-opcion">
                 <FontAwesomeIcon icon={faPenToSquare} />
@@ -164,7 +163,20 @@ function clientesp() {
               </td>
               </tr>
 
-              {/* Puedes agregar más filas aquí con el mismo formato */}
+              <tr>
+                <th scope="row">6</th>
+                <td>Primeum</td>
+                <td>Ala norte, piso 1, habitacion no. 23</td>
+                <td>Ocupada</td>
+                <td>
+                <button type="button" className="btn btn-primary btn-sm" id="btn-opcion">
+                <FontAwesomeIcon icon={faPenToSquare} />
+                </button>
+                <button type="button" className="btn btn-danger btn-sm" id="btn-opcion">
+                <FontAwesomeIcon icon={faTrashCan} />
+                </button>
+              </td>
+              </tr>
             </tbody>
           </table>
         </div>
