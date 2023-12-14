@@ -43,7 +43,7 @@ namespace Data.UserData
             return Respuesta;
         }
 
-        public static int? GetIdUser()
+        private static int? GetIdUser()
         {
             int? ID = null;
             conexion.abrirConexion();

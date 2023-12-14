@@ -15,7 +15,6 @@ namespace Data.UserData
         private static connectionsDB conexion = new connectionsDB();
         private static SqlCommand sqlCommand;
         private static SqlDataReader reader;
-        private static int commandTimeoutInSeconds = 30;
         private static string Query;
         
         public static dynamic GetAllReservaciones(connectionsDB conexion)
@@ -187,6 +186,7 @@ namespace Data.UserData
                 IdReservacion = reader.GetInt32(reader.GetOrdinal("IdReservacion")),
                 IdCliente = reader.GetInt32(reader.GetOrdinal("IdCliente")),
                 IdHabitacion = reader.GetInt32(reader.GetOrdinal("IdHabitacion")),
+                FechaNow = reader.GetDateTime(reader.GetOrdinal("FechaNow")),
                 FechaCheckIn = reader.GetDateTime(reader.GetOrdinal("FechaCheckIn")),
                 FechaCheckOut = reader.GetDateTime(reader.GetOrdinal("FechaCheckOut")),
                 HoraCheckIn = reader.IsDBNull(reader.GetOrdinal("HoraCheckIn")) ? TimeSpan.Zero : reader.GetTimeSpan(reader.GetOrdinal("HoraCheckIn")),

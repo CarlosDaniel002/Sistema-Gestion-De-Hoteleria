@@ -1,4 +1,5 @@
-﻿using Data.Models;
+﻿using Dapper;
+using Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -17,6 +18,7 @@ namespace Data.UserData
         private static SqlDataReader reader;
         private static int commandTimeoutInSeconds = 30;
         private static string Query;
+
 
         public static dynamic GetAllHabitaciones()
         {
@@ -41,10 +43,10 @@ namespace Data.UserData
                         ListaHabitacion.Add(new Habitacion()
                         {
                             IdHabitacion = reader.GetInt32(0),
-                            IdCategoria = reader.GetInt32(0),
-                            Ubicacion = reader.GetString(1),
-                            Estado = reader.GetString(2),
-                            ComentarioH = reader.GetString(3),
+                            IdCategoria = reader.GetInt32(1),
+                            Ubicacion = reader.GetString(2),
+                            Estado = reader.GetString(3),
+                            ComentarioH = reader.GetString(4),
                             Activo = reader.GetByte(5)
                         });
                     }
@@ -79,10 +81,10 @@ namespace Data.UserData
                         HabitacionID = new Habitacion()
                         {
                             IdHabitacion = reader.GetInt32(0),
-                            IdCategoria = reader.GetInt32(0),
-                            Ubicacion = reader.GetString(1),
-                            Estado = reader.GetString(2),
-                            ComentarioH = reader.GetString(3),
+                            IdCategoria = reader.GetInt32(1),
+                            Ubicacion = reader.GetString(2),
+                            Estado = reader.GetString(3),
+                            ComentarioH = reader.GetString(4),
                             Activo = reader.GetByte(5)
                         };
                     }
@@ -105,11 +107,15 @@ namespace Data.UserData
         {
             try
             {
-                conexion.abrirConexion();
-                Query = $"EXEC InsertCliente '{habitacion.Ubicacion}', '{habitacion.Estado}', '{habitacion.ComentarioH}'";
-                sqlCommand = new SqlCommand(Query, conexion.dataBase);
-                reader = sqlCommand.ExecuteReader();
-                conexion.cerrarConexion();
+
+                using (var connection = new SqlConnection(conexion.dataBase.ConnectionString))
+                {
+                    connection.Open();
+                    // var query = "EXEC ActualizarClave @Nuevo = @Clave, @ID = @IDU; ";
+                    var query = "EXEC InsertHabitacion @IDCategoria, @HUbicacion, @Comentario; ";
+                    var parameters = new { IDCategoria = habitacion.IdCategoria, HUbicacion = habitacion.Ubicacion, Comentario =  habitacion.ComentarioH };
+                    connection.QueryFirstOrDefault(query, parameters);
+                }
 
                 Console.WriteLine($"Nuevo estado de {habitacion.Estado} - habitacion.");
                 return Respuesta.getRespuesta("Se genero con exito", "0000", "");
@@ -129,7 +135,9 @@ namespace Data.UserData
             try
             {
                 conexion.abrirConexion();
-                Query = $"EXEC UpdateHabitacion '{habitacion.Ubicacion}', '{habitacion.Estado}', '{habitacion.ComentarioH}';";
+                Query = $"EXEC ActualizarHabitaciones @Id= {habitacion.IdHabitacion}, @IdCategoria = {habitacion.IdCategoria}, @Ubicacion = '{habitacion.Ubicacion}', " +
+                    $"@Estado = '{habitacion.Estado}', @ComentarioH = '{habitacion.ComentarioH}';";
+                // Query = $"EXEC UpdateHabitacion '{habitacion.Ubicacion}', '{habitacion.Estado}', '{habitacion.ComentarioH}';";
                 sqlCommand = new SqlCommand(Query, conexion.dataBase);
                 reader = sqlCommand.ExecuteReader();
                 conexion.cerrarConexion();

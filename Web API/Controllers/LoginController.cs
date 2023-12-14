@@ -11,10 +11,17 @@ namespace Web_API.Controllers
     [ApiController]
     public class LoginController : ControllerBase
     {
-        [HttpGet("login")]
+        [HttpPost("login")]
         public dynamic Login(LoginUser user)
         {
             var Respuesta = LoginFunctions.LoginUser(user.Usuario, user.Clave);
+            return Respuesta;
+        }
+
+        [HttpPut("login")]
+        public dynamic ChangePassword(Password clave)
+        {
+            var Respuesta = LoginFunctions.ChangePassword(clave.token,clave.claveActual,clave.claveNueva,clave.claveNuevaCon);
             return Respuesta;
         }
     }

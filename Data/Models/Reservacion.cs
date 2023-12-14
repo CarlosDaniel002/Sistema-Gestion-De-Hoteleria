@@ -11,6 +11,7 @@ namespace Data.Models
         public int IdReservacion { get; set; }
         public int IdCliente { get; set; }
         public int IdHabitacion { get; set; }
+        public DateTime FechaNow { get; set; }
         public DateTime FechaCheckIn { get; set; }
         public DateTime FechaCheckOut { get; set; }
         public TimeSpan? HoraCheckIn { get; set; }
