@@ -142,8 +142,10 @@ const Category = () => {
     setModalShow(true);
   };
 
-  const handleGuardar = () => {
+  const handleGuardar = (e) => {
+    e.preventDefault()    
     if (categoriaSeleccionada) {
+    
       editarCategoria({ ...categoriaSeleccionada, ...formulario });
     } else {
       agregarCategoria(formulario);
