@@ -1,20 +1,5 @@
-{
-  /*
-    npm install
-    npm i --save @fortawesome/fontawesome-svg-core
-    npm i --save @fortawesome/free-solid-svg-icons
-    npm i --save @fortawesome/free-regular-svg-icons
-    npm i --save @fortawesome/free-brands-svg-icons
-    npm i --save @fortawesome/react-fontawesome@latest
-    npm install --save react-bootstrap bootstrap
-    npm install react-bootstrap bootstrap
-    npm install react-bootstrap
-  */
-}
-
 import React, { useState, useEffect } from "react";
 import Navigation from "../components/Navigation";
-import "./css/style.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faAngleLeft,
@@ -24,20 +9,17 @@ import {
   faPenToSquare,
   faTrashCan,
 } from "@fortawesome/free-solid-svg-icons";
-import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
+import "./css/style.css";
 
 const URL = "https://pfg10itla-001-site1.gtempurl.com/Categorias";
 
 const Category = () => {
-  {
-    /* Del Modal*/
-  }
   const [categorias, setCategorias] = useState([]);
   const [categoriaSeleccionada, setCategoriaSeleccionada] = useState(null);
-  const [modalShow, setModalShow] = useState(false);
   const [paginaActual, setPaginaActual] = useState(0);
+  const [filtro, setFiltro] = useState("");
   const filasPorPagina = 5;
   const [formulario, setFormulario] = useState({
     nombre: "",
@@ -53,72 +35,74 @@ const Category = () => {
     mostrarFilas();
   }, [paginaActual]);
 
-  const cargarCategorias = () => {
-    fetch(URL)
-      .then((response) => response.json())
-      .then((data) => setCategorias(data))
-      .catch((error) => console.error("Error al cargar categorías:", error));
+  const cargarCategorias = async () => {
+    try {
+      const response = await fetch(URL);
+      const data = await response.json();
+      setCategorias(data);
+    } catch (error) {
+      console.error("Error al cargar categorías:", error);
+    }
   };
 
   const abrirModalInsertar = () => {
     setCategoriaSeleccionada(null);
-    setFormulario({
-      nombre: "",
-      cantidadMax: 0,
-      cuota1: 0,
-      cuota2: 0,
-      precio: 0,
-      comentarioC: "",
-    });
-    setModalShow(true);
+    limpiarFormulario();
+    cargarCategorias();
   };
 
-  const agregarCategoria = (nuevaCategoria) => {
-    fetch(URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(nuevaCategoria),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Respuesta al agregar categoría:", data);
-        cargarCategorias();
-      })
-      .catch((error) => console.error("Error al agregar categoría:", error));
+  const agregarCategoria = async (nuevaCategoria) => {
+    try {
+      const response = await fetch(URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(nuevaCategoria),
+      });
+
+      const data = await response.json();
+      console.log("Respuesta al agregar categoría:", data);
+      cargarCategorias();
+    } catch (error) {
+      console.error("Error al agregar categoría:", error);
+    }
   };
 
-  const editarCategoria = (categoriaEditada) => {
-    fetch(URL, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(categoriaEditada),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Respuesta al editar categoría:", data);
-        cargarCategorias();
-      })
-      .catch((error) => console.error("Error al editar categoría:", error));
+  const editarCategoria = async (categoriaEditada) => {
+    try {
+      const response = await fetch(URL, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(categoriaEditada),
+      });
+
+      const data = await response.json();
+      console.log("Respuesta al editar categoría:", data);
+      cargarCategorias();
+    } catch (error) {
+      console.error("Error al editar categoría:", error);
+    }
   };
 
-  const eliminarCategoria = (idCategoria) => {
-    fetch(URL, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ Id: idCategoria }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Respuesta al eliminar categoría:", data);
-        cargarCategorias();
-      })
-      .catch((error) => console.error("Error al eliminar categoría:", error));
+  const eliminarCategoria = async (idCategoria) => {
+    try {
+      const response = await fetch(URL, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ Id: idCategoria }),
+      });
+
+      const data = await response.json();
+      console.log("Respuesta al eliminar categoría:", data);
+      cargarCategorias();
+    } catch (error) {
+      console.error("Error al eliminar categoría:", error);
+    }
   };
 
   const handleInputChange = (e) => {
@@ -139,19 +123,16 @@ const Category = () => {
       precio: categoria.precio,
       comentarioC: categoria.comentarioC,
     });
-    setModalShow(true);
   };
 
   const handleGuardar = (e) => {
-    e.preventDefault()    
+    e.preventDefault();
     if (categoriaSeleccionada) {
-    
       editarCategoria({ ...categoriaSeleccionada, ...formulario });
     } else {
       agregarCategoria(formulario);
     }
-
-    setModalShow(false);
+    abrirModalInsertar();
   };
 
   const filtrarCategorias = (filtro) => {
@@ -160,32 +141,30 @@ const Category = () => {
         categoria.nombre.toLowerCase().includes(filtro.toLowerCase()) ||
         categoria.idCategoria.toString().includes(filtro)
     );
-      setCategorias(categoriasFiltradas);
+    setCategorias(categoriasFiltradas);
   };
-  {
-    /* De La Tabla */
-  }
+
   const mostrarFilas = () => {
     const filas = document
       .getElementById("PTabla")
       .getElementsByTagName("tbody")[0].rows;
-    const totalPaginas = Math.ceil(filas.length / filasPorPagina);
 
     for (let i = 0; i < filas.length; i++) {
-      filas[i].style.display = "none";
-    }
-
-    for (
-      let i = paginaActual * filasPorPagina;
-      i < (paginaActual + 1) * filasPorPagina;
-      i++
-    ) {
-      if (filas[i]) {
-        filas[i].style.display = "";
-      }
+      filas[i].style.display = i >= paginaActual * filasPorPagina && i < (paginaActual + 1) * filasPorPagina ? "" : "none";
     }
 
     mostrarNumeroDeSeccion();
+  };
+
+  const limpiarFormulario = () => {
+    setFormulario({
+      nombre: "",
+      cantidadMax: 0,
+      cuota1: 0,
+      cuota2: 0,
+      precio: 0,
+      comentarioC: "",
+    });
   };
 
   const irHaciaAtras = () => {
@@ -208,27 +187,52 @@ const Category = () => {
   const mostrarNumeroDeSeccion = () => {
     const seccionBtn = document.getElementById("seccionBtn");
     if (seccionBtn) {
-      seccionBtn.textContent = "Pag. " + (paginaActual + 1);
+      seccionBtn.textContent = `Pag. ${paginaActual + 1}`;
     }
   };
 
-  const ModalInsertar = (props) => {
-    return (
-      <Modal
-        {...props}
-        size="lg"
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
-      >
-        <Modal.Header closeButton>
-          <Modal.Title
-            id="contained-modal-title-vcenter"
-            className="fw-semibold fs-4"
+  return (
+    <div>
+      <Navigation />
+      <div className="row g-3" id="contenido">
+        <div className="col-md-9">
+          <h3 id="sub-titulo">Categorías</h3>
+        </div>
+
+        {/* Boton agregar */}
+        <div className="col-md-3">
+          <button
+            onClick={abrirModalInsertar}
+            className="btn"
+            id="btn-add"
           >
-            Agregar Categoría
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
+            <FontAwesomeIcon icon={faFileCirclePlus} /> Limpiar
+          </button>
+        </div>
+
+        {/* Buscador */}
+        <div className="col-md-12">
+          <div className="input-group">
+            <input
+              type="text"
+              className="form-control"
+              name="lupa"
+              placeholder="Escribir aquí..."
+              value={filtro}
+              onChange={(e) => setFiltro(e.target.value)}
+            />
+            <button
+              className="btn btn-secondary"
+              type="button"
+              onClick={() => filtrarCategorias(filtro)}
+            >
+              <FontAwesomeIcon icon={faMagnifyingGlass} />
+            </button>
+          </div>
+        </div>
+
+        {/* Formulario */}
+        <div className="col-md-12">
           <form className="row g-3" onSubmit={handleGuardar}>
             <div className="col-md-8">
               <label htmlFor="validationDefault01" className="form-label">
@@ -328,52 +332,13 @@ const Category = () => {
                 onChange={handleInputChange}
               ></textarea>
             </div>
+
+            <div className="col-md-12">
+              <Button className="btn btn-dark col-md-3" type="submit" variant="primary">
+                Agregar
+              </Button>
+            </div>
           </form>
-        </Modal.Body>
-        <Modal.Footer>
-          <button className="btn btn-dark col-md-3" onClick={handleGuardar}>
-            Agregar
-          </button>
-        </Modal.Footer>
-      </Modal>
-    );
-  };
-  
-  return (
-    <div>
-      <Navigation />
-      <div className="row g-3" id="contenido">
-        <div className="col-md-9">
-          <h3 id="sub-titulo">Categorías</h3>
-        </div>
-
-        {/* Boton agregar, llama modal */}
-        <div className="col-md-3">
-          <button
-            onClick={() => {
-              setModalShow(true), abrirModalInsertar();
-            }}
-            className="btn"
-            id="btn-add"
-          >
-            <FontAwesomeIcon icon={faFileCirclePlus} /> Agregar Categorías
-          </button>
-          <ModalInsertar show={modalShow} onHide={() => setModalShow(false)} />
-        </div>
-
-        {/* Buscador */}
-        <div className="col-md-12">
-          <div className="input-group">
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Escribir aqui..."
-              onChange={(e) => setFormulario({ nombre: e.target.value })}
-            />
-            <button className="btn btn-secondary" type="button"onClick={() => filtrarCategorias(formulario.nombre)}>
-              <FontAwesomeIcon icon={faMagnifyingGlass} />
-            </button>
-          </div>
         </div>
 
         {/* Tabla */}
@@ -407,20 +372,22 @@ const Category = () => {
                     <td>${categoria.precio}</td>
                     <td>{categoria.comentarioC}</td>
                     <td>
-                      <button
+                      <Button
                         type="button"
-                        className="btn btn-primary btn-sm"
+                        variant="primary"
+                        size="sm"
                         onClick={() => abrirModalEditar(categoria)}
                       >
                         <FontAwesomeIcon icon={faPenToSquare} />
-                      </button>
-                      <button
+                      </Button>
+                      <Button
                         type="button"
-                        className="btn btn-danger btn-sm"
+                        variant="danger"
+                        size="sm"
                         onClick={() => eliminarCategoria(categoria.idCategoria)}
                       >
                         <FontAwesomeIcon icon={faTrashCan} />
-                      </button>
+                      </Button>
                     </td>
                   </tr>
                 ))}
@@ -428,29 +395,32 @@ const Category = () => {
             </table>
           </div>
           <div className="col-md-12">
-            <div className="btn-group" role="group" id="btn-tabla">
-              <button
+            <ButtonGroup role="group" id="btn-tabla">
+              <Button
                 type="button"
-                className="btn btn-secondary btn-sm"
+                variant="secondary"
+                size="sm"
                 onClick={irHaciaAtras}
               >
                 <FontAwesomeIcon icon={faAngleLeft} />
-              </button>
-              <button
+              </Button>
+              <Button
                 type="button"
-                className="btn btn-outline-secondary btn-sm"
+                variant="outline-secondary"
+                size="sm"
                 id="seccionBtn"
               >
                 -
-              </button>
-              <button
+              </Button>
+              <Button
                 type="button"
-                className="btn btn-secondary btn-sm"
+                variant="secondary"
+                size="sm"
                 onClick={irHaciaAdelante}
               >
                 <FontAwesomeIcon icon={faAngleRight} />
-              </button>
-            </div>
+              </Button>
+            </ButtonGroup>
           </div>
         </div>
       </div>

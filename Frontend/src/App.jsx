@@ -9,9 +9,11 @@ import Reservation from './components/reservacion';
 import NewUser from "./components/newuser";
 import NewPass from "./components/newpassword";
 import Log_in from "./components/Login";
+import { UserProvider } from './components/UserContext';
 function App() {
   return (
     <BrowserRouter>
+    <UserProvider>
       <div>
         
         
@@ -28,6 +30,7 @@ function App() {
           
         </Routes>
       </div>
+      </UserProvider>
     </BrowserRouter>
   );
 }

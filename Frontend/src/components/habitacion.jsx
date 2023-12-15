@@ -10,16 +10,15 @@ import {
   faPenToSquare,
   faTrashCan,
 } from "@fortawesome/free-solid-svg-icons";
-import Modal from "react-bootstrap/Modal";
 import axios from "axios";
 
 const URL = "https://pfg10itla-001-site1.gtempurl.com/Habitacion";
 
 function Habitacion() {
-  const [modalShow, setModalShow] = useState(false);
   const [habitaciones, setHabitaciones] = useState([]);
   const [habitacionSeleccionada, setHabitacionSeleccionada] = useState(null);
   const [paginaActual, setPaginaActual] = useState(0);
+  const [filtro, setFiltro] = useState("");
   const filasPorPagina = 5;
   const [formulario, setFormulario] = useState({
     idCategoria: 0,
@@ -40,17 +39,6 @@ function Habitacion() {
     } catch (error) {
       console.log("Error al cargar las habitaciones", error);
     }
-  };
-
-  const abrirModalInsertar = () => {
-    setHabitacionSeleccionada(null);
-    setFormulario({
-      idCategoria: 0,
-      ubicacion: "",
-      estado: "",
-      comentarioH: "",
-    });
-    setModalShow(true);
   };
 
   const agregarHabitacion = async (nuevaHabitacion) => {
@@ -87,33 +75,44 @@ function Habitacion() {
     }
   };
 
-  const abrirModalEditar = (habitacion) => {
-    setHabitacionSeleccionada(habitacion);
-    setFormulario({
-      idCategoria: habitacion.idCategoria,
-      ubicacion: habitacion.ubicacion,
-      estado: habitacion.estado,
-      comentarioH: habitacion.comentarioH,
-    });
-    setModalShow(true);
-  };
-
   const handleGuardar = () => {
     if (habitacionSeleccionada) {
       editarHabitacion({ ...habitacionSeleccionada, ...formulario });
     } else {
       agregarHabitacion(formulario);
     }
-    setModalShow(false);
   };
 
   const filtrarHabitaciones = (filtro) => {
     const habitacionesFiltradas = habitaciones.filter(
       (habitacion) =>
         habitacion.estado.toLowerCase().includes(filtro.toLowerCase()) ||
-        habitacion.idHabitacion.toString().includes(filtro)
+        habitacion.idHabitacion.toString().includes(filtro) || 
+        habitacion.ubicacion.toLowerCase().includes(filtro.toLowerCase())
     );
     setHabitaciones(habitacionesFiltradas);
+  };
+  const abrirModalEditar = (habi) => {
+    setHabitacionSeleccionada(habi);
+    setFormulario({
+      idCategoria: habi.idCategoria,
+      ubicacion: habi.ubicacion,
+      estado: habi.estado,
+      comentarioH: habi.comentarioH,
+    });
+  };
+  const abrirModalInsertar = () => {
+    setHabitacionSeleccionada(null);
+    limpiarFormulario();
+    cargarHabitaciones();
+  };
+  const limpiarFormulario = () => {
+    setFormulario({
+      idCategoria: 0,
+      ubicacion: "",
+      estado: "",
+      comentarioH: "",
+    });
   };
 
   const handleInputChange = (e) => {
@@ -171,24 +170,47 @@ function Habitacion() {
     }
   };
 
-  const ModalInsertar = (props) => {
-    return (
-      <Modal
-        {...props}
-        size="lg"
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
-      >
-        <Modal.Header closeButton>
-          <Modal.Title
-            id="contained-modal-title-vcenter"
-            className="fw-semibold fs-4"
+  return (
+    <>
+      <Navigation />
+
+      <div className="row g-3" id="contenido">
+        <div className="col-md-9">
+          <h3 id="sub-titulo">Habitaciones</h3>
+        </div>
+
+        <div className="col-md-3">
+          <button
+            onClick={() => abrirModalInsertar()}
+            className="btn"
+            id="btn-add"
           >
-            Agregar Habitacion
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <form className="row g-3" onSubmit={(e) => e.preventDefault()}>
+            <FontAwesomeIcon icon={faFileCirclePlus} /> Limpiar
+          </button>
+        </div>
+
+        <div className="col-md-12">
+          <div className="input-group">
+            <input
+              type="text"
+              className="form-control"
+              name="lupa"
+              placeholder="Escribir aquí..."
+              value={filtro}
+              onChange={(e) => setFiltro(e.target.value)}
+            />
+            <button
+              className="btn btn-secondary"
+              type="button"
+              onClick={() => filtrarHabitaciones(filtro)}
+            >
+              <FontAwesomeIcon icon={faMagnifyingGlass} />
+            </button>
+          </div>
+        </div>
+
+        <div className="col-md-12">
+          <form className="row g-3">
             <div className="col-md-6">
               <label htmlFor="validationDefault01" className="form-label">
                 Tipo de Categoría
@@ -205,8 +227,8 @@ function Habitacion() {
                   Elige
                 </option>
                 <option value="1">Primeum</option>
-                <option value="2">Primeum</option>
-                <option value="3">Primeum</option>
+                <option value="2">Regular</option>
+                <option value="3">Normal</option>
               </select>
             </div>
 
@@ -222,7 +244,7 @@ function Habitacion() {
                 value={formulario.estado}
                 onChange={handleInputChange}
               >
-                <option  disabled value="">
+                <option disabled value="">
                   Elige
                 </option>
                 <option value="Disponible">Disponible</option>
@@ -260,55 +282,16 @@ function Habitacion() {
                 onChange={handleInputChange}
               ></textarea>
             </div>
+
+            <div className="col-md-12">
+              <button
+                className="btn btn-dark col-md-3"
+                onClick={() => handleGuardar()}
+              >
+                Agregar
+              </button>
+            </div>
           </form>
-        </Modal.Body>
-        <Modal.Footer>
-          <button className="btn btn-dark col-md-3" onClick={handleGuardar}>
-            Agregar
-          </button>
-        </Modal.Footer>
-      </Modal>
-    );
-  };
-
-  return (
-    <>
-      <Navigation />
-
-      <div className="row g-3" id="contenido">
-        <div className="col-md-9">
-          <h3 id="sub-titulo">Habitaciones</h3>
-        </div>
-
-        <div className="col-md-3">
-          <button
-            onClick={() => {
-              setModalShow(true), abrirModalInsertar();
-            }}
-            className="btn"
-            id="btn-add"
-          >
-            <FontAwesomeIcon icon={faFileCirclePlus} /> Agregar Habitaciones
-          </button>
-          <ModalInsertar show={modalShow} onHide={() => setModalShow(false)} />
-        </div>
-
-        <div className="col-md-12">
-          <div className="input-group">
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Escribir aqui..."
-              onChange={(e) => setFormulario({ ubicacion: e.target.value })}
-            />
-            <button
-              className="btn btn-secondary"
-              type="button"
-              onClick={() => filtrarHabitaciones(formulario.ubicacion)}
-            >
-              <FontAwesomeIcon icon={faMagnifyingGlass} />
-            </button>
-          </div>
         </div>
 
         <div className="col-md-12">
@@ -329,7 +312,8 @@ function Habitacion() {
                 </tr>
               </thead>
               <tbody>
-                {habitaciones.map((habi) => (
+              {habitaciones.length > 0 ? (
+                habitaciones.map((habi) => (
                   <tr key={habi.idHabitacion}>
                     <th scope="row">{habi.idHabitacion}</th>
                     <td>{habi.idCategoria}</td>
@@ -353,8 +337,13 @@ function Habitacion() {
                       </button>
                     </td>
                   </tr>
-                ))}
-              </tbody>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="6">No hay habitaciones disponibles.</td>
+                </tr>
+              )}
+            </tbody>
             </table>
           </div>
           <div className="col-md-12">

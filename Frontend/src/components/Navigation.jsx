@@ -2,9 +2,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import login from '../img/logo.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useUser } from './UserContext';
 import { faClipboard, faUser, faBed, faTag,faGear, faUserPlus, faLock, faArrowRightFromBracket} from '@fortawesome/free-solid-svg-icons';
 
 const Navigation = () => {
+  const { user } = useUser();
   return (
     <nav className="navbar bg-secundary navbar-expand-lg">
       <div className="container-fluid" id="NavPadding">
@@ -39,7 +41,7 @@ const Navigation = () => {
                   <FontAwesomeIcon icon={faGear} />
                 </Link>
                 <ul className="dropdown-menu">
-                  <li className="dropdown-item"> Nombre del usuario</li>
+                  <li className="dropdown-item"> {user ? user.nombre : 'Invitado'}</li>
                   
                   <li>
                     <hr className="dropdown-divider " />
