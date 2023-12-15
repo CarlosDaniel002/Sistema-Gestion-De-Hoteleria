@@ -4,21 +4,22 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using System;
 using Data.Models;
-using Negocio.Clientes;
+using Negocio.Habitaciones;
 using Microsoft.Graph;
 using Microsoft.VisualStudio.Services.DelegatedAuthorization;
 using Data.UserData;
+using Negocio.Clientes;
 
 namespace Web_API.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class ClientesController : Controller
+    public class HabitacionController : Controller
     {
         [HttpGet]
         public dynamic Get()
         {
-            var Respuesta = VerClientes.GetAllClientes();
+            var Respuesta = VerHabitaciones.GetAllHabitaciones();
             return Respuesta;
         }
 
@@ -26,29 +27,29 @@ namespace Web_API.Controllers
         [Route("GetId")]
         public dynamic GetAtId(int? Id)
         {
-            var Respuesta = VerClientes.GetAtId(Id);
+            var Respuesta = VerHabitaciones.GetAtId(Id);
             return Respuesta;
         }
 
         [HttpPost]
 
-        public Respuesta CrearUsuario(Cliente cliente)
+        public Respuesta CrearUsuario(Habitacion habitacion)
         {
-            Respuesta mensaje = ModificarClientes.IngresarCliente(cliente);
+            Respuesta mensaje = AgregarHabitaciones.IngresarHabitacion(habitacion);
             return mensaje;
         }
 
         [HttpPut]
-        public Respuesta ModificarUsuario(Cliente cliente)
+        public Respuesta ModificarUsuario(Habitacion habitacion)
         {
-            Respuesta mensaje = ModificarClientes.AlterarCliente(cliente);
+            Respuesta mensaje = AgregarHabitaciones.AlterarHabitacion(habitacion);
             return mensaje;
         }
 
         [HttpDelete]
         public Respuesta Delete(IdEliminar Id)
         {
-            Respuesta mensaje = ModificarClientes.EliminarCliente(Id.Id,Id.Activar );
+            Respuesta mensaje = AgregarHabitaciones.EliminarHabitacion(Id.Id, Id.Activar);
             return mensaje;
         }
     }

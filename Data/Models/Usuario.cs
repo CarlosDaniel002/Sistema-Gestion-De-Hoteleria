@@ -9,13 +9,13 @@ namespace Data.Models
 {
     public class Usuario
     {
-        public int Id { get; set; }
+        public int IdUsuario { get; set; }
         [Required(ErrorMessage = "Nombre es obligatorio.")]
         public string NombreCompleto { get; set; }
         [Required(ErrorMessage = "Usuario es obligatorio.")]
         public string NombreUsuario { get; set; }
         [Required(ErrorMessage = "Contraseña es obligatorio.")]
-        public string Contraseña { get; set; }
+        public string ContrasenaHash { get; set; }
         public string Salting { get; set; }
         [Required(ErrorMessage = "El rol es obligatorio.")]
         public string RolUsuario { get; set; }

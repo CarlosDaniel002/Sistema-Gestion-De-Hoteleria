@@ -8,9 +8,9 @@ namespace Data.Models
 {
     public class Respuesta
     {
-        public string Resuesta { set; get; }
-        public string Codigo { set; get; }
-        public string Descripcion { set; get; }
+        public string? Resuesta { set; get; }
+        public string? Codigo { set; get; }
+        public string? Descripcion { set; get; }
 
         public static Respuesta getRespuesta(string R, string C, string D) {
            Respuesta respuesta = new Respuesta();
