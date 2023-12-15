@@ -8,24 +8,25 @@ using Data.Models;
 using Data.UserData;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
-namespace Negocio.Clientes
+namespace Negocio.Habitaciones
 {
-    public class ModificarClientes
+    public class AgregarHabitaciones
     {
-        public static Respuesta IngresarCliente(Cliente cliente)
+        public static Respuesta IngresarHabitacion(Habitacion habitacion)
         {
-            return ClientesDB.SetCliente(cliente);
+            return HabitacionDB.SetHabitacion(habitacion);
         }
 
-        public static Respuesta AlterarCliente(Cliente cliente)
+        public static Respuesta AlterarHabitacion(Habitacion habitacion)
         {
-            return ClientesDB.UpdateCliente(cliente);
+            return HabitacionDB.UpdateHabitacion(habitacion);
         }
 
-        public static Respuesta EliminarCliente(int id,int Accion ) {
+        public static Respuesta EliminarHabitacion(int id, int Accion)
+        {
             if (Accion == 0 || Accion == 1)
             {
-                return ClientesDB.DeleteCliente(id, Accion);
+                return HabitacionDB.DeleteHabitacion(id, Accion);
             }
             else
             {

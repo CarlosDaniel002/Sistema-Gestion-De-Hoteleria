@@ -20,7 +20,7 @@ namespace Negocio.Clientes
         {
             if (Id != null)
             {
-                Cliente prueba = null;
+                Cliente? prueba = null;
                 var cliente = ClientesDB.GetClienteAtId(Id);
                 if (cliente == prueba)
                     return Respuesta.getRespuesta("El cliente no existe", "9970", "El ID que se envia esta nulo o no es valido.");
